@@ -1,0 +1,14 @@
+.logo {
+  height: 5rem;
+  width: 5rem;
+}
+
+.boxType {
+  max-width: 25rem;
+  min-height: 25rem;
+  margin: auto;
+  padding: auto;
+  border: solid black 2px;
+}
+
+/*# sourceMappingURL=style.css.map */
