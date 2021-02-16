@@ -9,11 +9,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeControleurController extends AbstractController
 {
     /**
-     * @Route("/", name="home_controleur")
+     * @Route("/", name="home")
      */
     public function index(): Response
     {
-        return $this->render('home_controleur/index.html.twig', [
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeControleurController',
+        ]);
+    }
+
+    /**
+     * @Route("/mentions", name="mentions")
+     */
+    public function mentions(): Response
+    {
+        return $this->render('home/mentions.html.twig', [
             'controller_name' => 'HomeControleurController',
         ]);
     }
