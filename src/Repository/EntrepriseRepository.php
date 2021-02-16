@@ -47,4 +47,12 @@ class EntrepriseRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countAllEntreprise()
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select('COUNT(a.id) as value');
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
 }
