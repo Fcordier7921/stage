@@ -1,20 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UseBaseController!{% endblock %}
+{% block title %}liste apprenant{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1 class="text-center">Notre liste d'appreant a la recherche d'un stage</h1>
+    {% for apprenant in apprenants %}
+        {% for candidature in apprenant.candidature %}
+            {% if candidature.statut != 'Positif' %}
+                <div class="row">
+                    <div class="col-12 col-md-2 boxe" style="background-image: url(/img/{{apprenant.avatar}});">
+                        <h4>{{apprenant.nom}}</h4>
+                        <h6>{{apprenant.prenom}}</h6>
+                        <p>comptétences:{{apprenant.competences}}</p>
+                        <a href="{{apprenant.portfolio}}">{{apprenant.portfolio}}</a>
+                        <a href="{{apprenant.git}}">{{apprenant.git}}</a>
+                        <a href="{{apprenant.cv}}">{{apprenant.cv}}</a>
+                    </div>
+                
+                </div>
+                
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/stage/src/Controller/UseBaseController.php'|file_link(0) }}">src/Controller/UseBaseController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/stage/templates/use_base/index.html.twig'|file_link(0) }}">templates/use_base/index.html.twig</a></code></li>
-    </ul>
-</div>
+        {% endif %}
+    {% endfor %}
+    
+   
+        
+    {% endfor %}
+
+
 {% endblock %}

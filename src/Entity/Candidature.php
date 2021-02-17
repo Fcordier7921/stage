@@ -24,11 +24,13 @@ class Candidature
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $date_relance;
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $date_entretient;
 

@@ -19,7 +19,7 @@ class ApprenantRepository extends ServiceEntityRepository
         parent::__construct($registry, Apprenant::class);
     }
 
-    // /**
+    //**
     //  * @return Apprenant[] Returns an array of Apprenant objects
     //  */
     /*
@@ -36,17 +36,17 @@ class ApprenantRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Apprenant
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
+    // public function findOneBySomeField($value): ?Apprenant
+    // {
+    //     return $this->createQueryBuilder('a')
+    //         ->andWhere('a.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
+    
     public function countAllApprenant()
     {
         $queryBuilder = $this->createQueryBuilder('a');
@@ -54,5 +54,6 @@ class ApprenantRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
 
 }

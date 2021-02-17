@@ -92,7 +92,7 @@ class Apprenant
     /**
      * @ORM\Column(type="boolean")
      */
-    private $mobilité;
+    private $mobilit;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -294,14 +294,14 @@ class Apprenant
         return $this;
     }
 
-    public function getMobilité(): ?bool
+    public function getMobilit(): ?bool
     {
-        return $this->mobilité;
+        return $this->mobilit;
     }
 
-    public function setMobilité(bool $mobilité): self
+    public function setMobilit(bool $mobilit): self
     {
-        $this->mobilité = $mobilité;
+        $this->mobilit = $mobilit;
 
         return $this;
     }

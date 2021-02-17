@@ -1,3 +1,15 @@
+
+%model{
+    max-width: 198px;
+    min-height: 255px;
+    margin: auto;
+    padding: auto;
+    border: solid black 2px;
+    
+}
+
+
+
 .logo{
     height: 5rem;
     width: 5rem;
@@ -9,4 +21,8 @@
     padding: auto;
     border: solid black 2px;
     
+}
+.boxe{
+    @extend %model;
+    background-size: cover;
 }
