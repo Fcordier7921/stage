@@ -22,11 +22,11 @@ class ApprenantRepository extends ServiceEntityRepository
     //**
     //  * @return Apprenant[] Returns an array of Apprenant objects
     //  */
-    /*
+    
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+            ->andWhere('a.Users = :val')
             ->setParameter('val', $value)
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
@@ -34,7 +34,7 @@ class ApprenantRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+    
 
     
     // public function findOneBySomeField($value): ?Apprenant

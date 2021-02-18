@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ApprenantControlllerController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h2>fiche apprenant</h2>
+    <div class="row">
+        <div class="col-12 col-md-3">
+         {% for info in fiche %}
+            <h4>{{info.nom}}</h4>
+                <h6>{{info.prenom}}</h6>
+                <p>comptétences:{{info.competences}}</p><br>
+                <a href="{{info.portfolio}}">{{info.portfolio}}</a><br>
+                <a href="{{info.git}}">{{info.git}}</a><br>
+                <a href="{{info.cv}}">{{info.cv}}</a><br>
+        {% endfor %}
+            
+        </div>
+        <div class="col-12 col-md-9">
+        
+        </div>
+    </div>
+       
+    
+</div>
+{% endblock %}

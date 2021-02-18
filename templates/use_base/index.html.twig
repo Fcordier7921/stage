@@ -5,28 +5,19 @@
 {% block body %}
 
     <h1 class="text-center">Notre liste d'appreant a la recherche d'un stage</h1>
-    {% for apprenant in apprenants %}
-        {% for candidature in apprenant.candidature %}
-            {% if candidature.statut != 'Positif' %}
-                <div class="row">
-                    <div class="col-12 col-md-2 boxe" style="background-image: url(/img/{{apprenant.avatar}});">
-                        <h4>{{apprenant.nom}}</h4>
-                        <h6>{{apprenant.prenom}}</h6>
-                        <p>comptétences:{{apprenant.competences}}</p>
-                        <a href="{{apprenant.portfolio}}">{{apprenant.portfolio}}</a>
-                        <a href="{{apprenant.git}}">{{apprenant.git}}</a>
-                        <a href="{{apprenant.cv}}">{{apprenant.cv}}</a>
-                    </div>
-                
-                </div>
-                
+    <div class="row mx-5">
+        {% for apprenant in apprenants %}
+                                
+            <div class="col-12 col-md-2 boxe mx-5" style="background-image: url(/img/{{apprenant.avatar}});">
+                <h4>{{apprenant.nom}}</h4>
+                <h6>{{apprenant.prenom}}</h6>
+                <p>comptétences:{{apprenant.competences}}</p>
+                <a href="{{apprenant.portfolio}}">{{apprenant.portfolio}}</a>
+                <a href="{{apprenant.git}}">{{apprenant.git}}</a>
+                <a href="{{apprenant.cv}}">{{apprenant.cv}}</a>
+            </div>   
+                  
+        {% endfor %}
 
-        {% endif %}
-    {% endfor %}
-    
-   
-        
-    {% endfor %}
-
-
+    </div>
 {% endblock %}

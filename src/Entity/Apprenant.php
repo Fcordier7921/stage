@@ -45,7 +45,7 @@ class Apprenant
     private $ville;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="string")
      */
     private $telephone;
 
@@ -91,8 +91,9 @@ class Apprenant
 
     /**
      * @ORM\Column(type="boolean")
+     * 
      */
-    private $mobilit;
+    private $mobilit = false;
 
     /**
      * @ORM\Column(type="string", length=255)
