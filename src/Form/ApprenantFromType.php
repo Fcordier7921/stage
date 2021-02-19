@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\BaseType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -177,11 +178,11 @@ class ApprenantFromType extends AbstractType
                     ])
                 ],
             ])
-            ->add('avatar', TextType::class, [
-                'attr'=>[
-                    'class'=> 'form-control',
-                    'style'=> 'width: 30%;'
-                ],
+            ->add('avatar', FileType::class, [
+                'label'=>false,
+                'multiple'=>false,
+                'mapped'=> false,
+                'required'=> false
         
             ])
             ->add('competences', TextType::class, [
