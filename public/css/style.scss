@@ -11,7 +11,9 @@
     width: 5rem;
 }
 
-
+body{
+    padding: 0.5rem;
+}
 .logo{
     height: 5rem;
     width: 5rem;
@@ -28,12 +30,16 @@
     @extend %model;
     background-size: cover;
 }
-.th{
-    @extend %modelTab;
-}
-.td{
-    @extend %modelTab;
-}
-.tr{
-    min-width: 100%;
-}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  
