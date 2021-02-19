@@ -7,7 +7,9 @@
     border: solid black 2px;
     
 }
-
+%modelTab{
+    width: 5rem;
+}
 
 
 .logo{
@@ -25,4 +27,13 @@
 .boxe{
     @extend %model;
     background-size: cover;
+}
+.th{
+    @extend %modelTab;
+}
+.td{
+    @extend %modelTab;
+}
+.tr{
+    min-width: 100%;
 }

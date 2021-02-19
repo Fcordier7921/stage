@@ -19,7 +19,26 @@
             
         </div>
         <div class="col-12 col-md-9">
-        
+            {% for info in fiche %}
+                <table>
+                    <tr>
+                        <th>entreprise contacté</th>
+                        <th>date de candidatire</th>
+                        <th>date de relance</th>
+                        <th>date d'entretien</th>
+                        <th>statuts de la candidature</th>
+                    </tr>
+                    <tr>
+                        <td>{{info.nom}}</td>
+                        <td>{{info.nom}}</td>
+                        <td>{{info.nom}}</td>
+                        <td>{{info.nom}}</td>
+                        <td>{{info.nom}}</td>
+                    </tr>
+                </table>
+
+            {% endfor %}
+
         </div>
     </div>
        

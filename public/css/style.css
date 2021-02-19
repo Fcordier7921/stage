@@ -6,6 +6,10 @@
   border: solid black 2px;
 }
 
+.td, .th {
+  width: 5rem;
+}
+
 .logo {
   height: 5rem;
   width: 5rem;
@@ -21,6 +25,10 @@
 
 .boxe {
   background-size: cover;
+}
+
+.tr {
+  min-width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
