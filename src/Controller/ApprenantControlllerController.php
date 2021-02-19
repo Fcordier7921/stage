@@ -15,32 +15,34 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * class ApprenantControlllerController
  * @package App\Controller
- * @route("/apprenant", name="apprenant_")
+ * @route("/apprenant")
  */
 class ApprenantControlllerController extends AbstractController
 {
 
-    // /**
-    //  * @Route("/fiche/{id}", name="fiche")
-    //  */
-    // public function filRegister(User $user, Apprenant $apprenant)
-    // {
-    //     $users = new User();
-    //     dd($user);
-    //     if( $users){
+    /**
+     * @Route("/route/{id}", name="apprenant_route")
+     */
+    public function filRegister(User $user, Apprenant $Apprenant)
+    {   $id=$user->getId();
+        // $Apprenant =new Apprenant();
+        // $Apprenant->getApprenant();
+        dd($Apprenant);
+        // for( user = Apprenant)
+        if( $id  ){
 
-    //         return $this->redirectToRoute('apprenant_fiche');
-    //     }
-    //     else{
-    //         return $this->redirectToRoute('apprenant_register');
-    //     }
+            return $this->redirect('/apprenant/fiche/'.$id);
+        }
+        else{
+            return $this->redirect('/apprenant/register/'.$id);
+        }
 
 
-    // } 
+    } 
 
     
     /**
-     * @Route("/register/{id}", name="register")
+     * @Route("/register/{id}", name="apprenant_register")
      */
     public function FromRegister(Request $request, User $user):Response
     {
@@ -72,7 +74,7 @@ class ApprenantControlllerController extends AbstractController
             ]);
     }
     /**
-     * @Route("/fiche/{id}", name="fiche")
+     * @Route("/fiche/{id}", name="apprenant_fiche")
      */
     public function AffCandidature(ApprenantRepository $ApprenantRepository, User  $user) : Response
     {
