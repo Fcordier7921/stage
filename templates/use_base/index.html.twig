@@ -8,7 +8,7 @@
     <div class="row mx-5">
         {% for apprenant in apprenants %}
                                 
-            <div class="col-12 col-md-2 boxe mx-5" style="background-image: url(/img/{{apprenant.avatar}});">
+            <div class="col-12 col-md-2 boxe mx-5 my-3" style="background-image: url(/uploads/brochures/{{apprenant.avatar}}); background-size: cover;">
                 <h4>{{apprenant.nom}}</h4>
                 <h6>{{apprenant.prenom}}</h6>
                 <p>comptétences:{{apprenant.competences}}</p>

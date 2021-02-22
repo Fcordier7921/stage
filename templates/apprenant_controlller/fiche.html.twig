@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ApprenantControlllerController!{% endblock %}
+{% block title %}Espace Apprenant{% endblock %}
 
 {% block body %}
 
@@ -9,17 +9,27 @@
     <div class="row">
         <div class="col-12 col-md-3">
          {% for info in fiche %}
+         <div>
+            <img src="/uploads/brochures/{{info.avatar}}" style="height: 10rem; width: 10rem;" alt="fghfg">
+         </div>
             <h4>{{info.nom}}</h4>
                 <h6>{{info.prenom}}</h6>
-                <p>comptétences:{{info.competences}}</p><br>
+                <p>comptétences:<br>
+                {{info.competences}}</p><br>
                 <a href="{{info.portfolio}}">{{info.portfolio}}</a><br>
                 <a href="{{info.git}}">{{info.git}}</a><br>
                 <a href="{{info.cv}}">{{info.cv}}</a><br>
-        {% endfor %}
-            
+        
+            <div>
+                <input  type="button" href="{{path('update_apprenant', {'id':info.id})}}" value="modifier"></input>
+            </div>
+        {% endfor %}    
         </div>
+        
         <div class="col-12 col-md-8">
-                
+            <div class="my-3">
+            <input  type="button" href="{{path('candidature')}}" value="ajouter une demande de stage"></input>
+            </div>    
                 <table>
                     <tr>
                         <th>entreprise contacté</th>

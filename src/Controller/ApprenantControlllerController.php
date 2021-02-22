@@ -6,6 +6,7 @@ use App\Entity\Apprenant;
 use App\Entity\User;
 use App\Form\ApprenantFromType;
 use App\Repository\ApprenantRepository;
+use App\Repository\CandidatureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -41,7 +42,7 @@ class ApprenantControlllerController extends AbstractController
               
         // dd($apprenant);
         
-       for($i=0; $i<=count($apprenant); $i++){
+       for($i=0; $i<count($apprenant); $i++){
             $appd=$apprenant[$i]->getUsers();
             $appuse= $appd->getid();
             
@@ -50,11 +51,10 @@ class ApprenantControlllerController extends AbstractController
             {
                 return $this->redirect('/apprenant/fiche/'.$id);
             }
-            else{
-                return $this->redirect('/apprenant/register/'.$id);
-            }
+            
 
        }
+       return $this->redirect('/apprenant/register/'.$id);
 
 
     } 
@@ -71,49 +71,37 @@ class ApprenantControlllerController extends AbstractController
 
 
         $task= new Apprenant();
+        
        //formulailaire
         $form =$this->createForm(ApprenantFromType::class, $task); 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //onrecuperere les image transmise
-            // $images =$form->get('avatar')->getData();
-            // if($task->getAvatar() !==null){
+           
+            if(($form->get('avatar')->getData()) != null)
+            {
                 $file = $form->get('avatar')->getData();
                 $fileName = uniqid(). '.' .$file->guessExtension();
-                
-                // $originalFilename = pathinfo($images->getClientOriginalName(), PATHINFO_FILENAME);
-                // // on génére un nouveau non f=de fichier
-                // $safeFilename = $slugger->slug($originalFilename);
-                // $newFilename = $safeFilename.'-'.uniqid().'.'.$images->$exts;
-                 // Move the file to the directory where brochures are stored
+             
                  try {
                     $file->move(
                         $this->getParameter('brochures_directory'),
                         $fileName
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                // }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $task->setAvatar('toto.jpg');
+                
+                }
+                $task->setAvatar($fileName);
+            }else{
+                $task->setAvatar('5.png');
             }
-            $manager->persist($task);
-            $manager->flush();
-
             $form->getData() ;
-            // but, the original `$task` variable has also been updated
+            
             $task = $form->getData();
             $task->setUsers($user);
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($task);
-            // $entityManager->flush();
+            
             $id= $user ->getId();
-            // return $this->redirect($request->getUri());
-            // return $this->redirectToRoute('fiche', ['5']);
+            $manager->persist($task);
+            $manager->flush();
             return $this->redirect('/apprenant/fiche/'.$id);
 
         }
@@ -127,20 +115,76 @@ class ApprenantControlllerController extends AbstractController
     /**
      * @Route("/fiche/{id}", name="apprenant_fiche")
      */
-    public function AffCandidature(ApprenantRepository $ApprenantRepository, User  $user) : Response
+    public function AffCandidature($id, ApprenantRepository $ApprenantRepository, User  $user, CandidatureRepository $CandidatureRepository) : Response
     {
        
         $user =$this-> getUser();
         $id= $user ->getId();
+        // $apprenant=$CandidatureRepository->findOneBy(['id'=>$id]);
+        // dd($apprenant);
+        // $idApp=$apprenant->getId();
         $projets=$ApprenantRepository->findByExampleField($id);
+        // $cands=$CandidatureRepository->findByExampleField($idApp);
         // dd($projets);
         return $this->render('apprenant_controlller/fiche.html.twig', [
             'fiche' => $projets,
+            // 'candidature' => $cands,
             
         ]);
 
 
     }  
+    /**
+     * 
+     *@route("/upeadaprenant/{id}", name="update_apprenant")
+     */
+    public function updeatApprenant($id, Request $request, EntityManagerInterface $manager, ApprenantRepository $apps)
+    {
+        $task =$apps->findOneBy(['id'=>$id]);
+        
+        $form =$this->createForm(ApprenantFromType::class, $task); 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            if(($form->get('avatar')->getData()) != null)
+            {
+                $file = $form->get('avatar')->getData();
+                dd( $form->get('avatar')->getData());
+                $fileName = uniqid(). '.' .$file->guessExtension();
+             
+                 try 
+                 {
+                    $file->move(
+                        $this->getParameter('brochures_directory'),
+                        $fileName
+                    );
+                } 
+                catch (FileException $e) 
+                {
+                
+                }
+                $task->setAvatar($fileName);
+            }
+
+            $form->getData() ;
+            
+            $task = $form->getData();
+            $pod=$task->getUsers();
+            
+            $idu= $pod ->getId();
+            // $manager->persist($task);
+            $manager->flush();
+            return $this->redirect('/apprenant/fiche/'.$idu);
+
+        }
+
+       
+
+        return $this->render('apprenant_controlller/index.html.twig', [
+            'form' =>$form->createView()
+            ]);
+    }
 
      
    

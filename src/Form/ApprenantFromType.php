@@ -182,7 +182,8 @@ class ApprenantFromType extends AbstractType
                 'label'=>false,
                 'multiple'=>false,
                 'mapped'=> false,
-                'required'=> false
+                'required'=> false,
+                
         
             ])
             ->add('competences', TextType::class, [

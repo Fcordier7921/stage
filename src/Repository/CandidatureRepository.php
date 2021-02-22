@@ -19,22 +19,21 @@ class CandidatureRepository extends ServiceEntityRepository
         parent::__construct($registry, Candidature::class);
     }
 
-    // /**
-    //  * @return Candidature[] Returns an array of Candidature objects
-    //  */
-    /*
+    /**
+    * @return Candidature[] Returns an array of Candidature objects
+    */
+    
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.Users = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Candidature
