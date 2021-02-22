@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 
+
 /**
  * class ApprenantControlllerController
  * @package App\Controller
@@ -26,27 +27,34 @@ class ApprenantControlllerController extends AbstractController
 
 
     /**
+     * 
      * @Route("/route/{id}", name="apprenant_route")
+     * 
+     * 
      */
-    public function filRegister(User $user, Apprenant $apprenant)
+    public function filRegister(User $user, ApprenantRepository $apps)
     
     {  
-        
+        $apprenant=$apps->findAll();
 
         $id=$user->getId();
-        $apprenant =new Apprenant();
-        // $Apprenant->getApprenant();
+              
+        // dd($apprenant);
         
-        $idApprenant= $apprenant->getId();
-        dd($idApprenant);
-        // for( user = Apprenant)
-        // if( $id  ){
+       for($i=0; $i<=count($apprenant); $i++){
+            $appd=$apprenant[$i]->getUsers();
+            $appuse= $appd->getid();
+            
 
-        //     return $this->redirect('/apprenant/fiche/'.$id);
-        // }
-        // else{
-        //     return $this->redirect('/apprenant/register/'.$id);
-        // }
+            if($appuse==$id)
+            {
+                return $this->redirect('/apprenant/fiche/'.$id);
+            }
+            else{
+                return $this->redirect('/apprenant/register/'.$id);
+            }
+
+       }
 
 
     } 
