@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * @ORM\Entity(repositoryClass=ApprenantRepository::class)
  */
@@ -129,7 +130,7 @@ class Apprenant
 
     public function __construct()
     {
-        $this->candidature = new ArrayCollection();
+        // $this->candidature = new ArrayCollection();
         $this->annoce_entreprise = new ArrayCollection();
     }
 
@@ -342,11 +343,10 @@ class Apprenant
         return $this;
     }
 
-    /**
-     * @return Collection|Candidature[]
-     */
-    public function getCandidature(): Collection
+    
+    public function getCandidature(): ?Candidature
     {
+        
         return $this->candidature;
     }
 

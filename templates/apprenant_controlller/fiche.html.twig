@@ -8,7 +8,7 @@
     <h2 class="text-center my-3">fiche apprenant</h2>
     <div class="row">
         <div class="col-12 col-md-3">
-         {% for info in fiche %}
+       
          <div>
             <img src="/uploads/brochures/{{info.avatar}}" style="height: 10rem; width: 10rem;" alt="fghfg">
          </div>
@@ -21,14 +21,14 @@
                 <a href="{{info.cv}}">{{info.cv}}</a><br>
         
             <div>
-                <input  type="button" href="{{path('update_apprenant', {'id':info.id})}}" value="modifier"></input>
+                <a type="button" href="{{path('update_apprenant', {'id':info.id})}}" value="modifier">modifier</a>
             </div>
-        {% endfor %}    
+           
         </div>
         
         <div class="col-12 col-md-8">
             <div class="my-3">
-            <input  type="button" href="{{path('candidature')}}" value="ajouter une demande de stage"></input>
+            <a  type="button" href="{{path('candidature', {'id':info.id})}}" value="ajouter une demande de stage">ajouter une demande de stage</a>
             </div>    
                 <table>
                     <tr>
@@ -38,15 +38,19 @@
                         <th>date d'entretien</th>
                         <th>statuts de la candidature</th>
                     </tr>
-                {% for info in fiche %}
+                {% if candidatures is defined %}
+                    
+                
+                {% for candidature in candidatures %}
                     <tr>
-                        <td>{{info.nom}}</td>
-                        <td>{{info.nom}}</td>
-                        <td>{{info.nom}}</td>
-                        <td>{{info.nom}}</td>
-                        <td>{{info.nom}}</td>
+                        <td>{{candidature.entreprise.nom}}</td>
+                        <td>{{candidature.dateCandidature|date("m/d/Y")}}</td>
+                        <td>{% if candidature.dateRelance is not null %}{{candidature.dateRelance |date("m/d/Y")}}{% endif %}</td>
+                        <td>{% if candidature.dateEntretient is not null %}{{candidature.dateEntretient |date("m/d/Y")}}{% endif %}</td>
+                        <td>{{candidature.statut}}</td>
                     </tr>
                 {% endfor %}
+                {% endif %}
                 </table>
 
             

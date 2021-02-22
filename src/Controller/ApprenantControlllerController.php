@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Apprenant;
+use App\Entity\Candidature;
 use App\Entity\User;
 use App\Form\ApprenantFromType;
 use App\Repository\ApprenantRepository;
-use App\Repository\CandidatureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -65,9 +65,7 @@ class ApprenantControlllerController extends AbstractController
      */
     public function FromRegister(Request $request, User $user, EntityManagerInterface $manager):Response
     {
-        // $mimeTypes = new MimeTypes();
-
-        // $exts = $mimeTypes->getExtensions('image/jpeg');
+        
 
 
         $task= new Apprenant();
@@ -115,21 +113,17 @@ class ApprenantControlllerController extends AbstractController
     /**
      * @Route("/fiche/{id}", name="apprenant_fiche")
      */
-    public function AffCandidature($id, ApprenantRepository $ApprenantRepository, User  $user, CandidatureRepository $CandidatureRepository) : Response
+    public function AffCandidature(User  $user) : Response
     {
        
-        $user =$this-> getUser();
-        $id= $user ->getId();
-        // $apprenant=$CandidatureRepository->findOneBy(['id'=>$id]);
-        // dd($apprenant);
-        // $idApp=$apprenant->getId();
-        $projets=$ApprenantRepository->findByExampleField($id);
-        // $cands=$CandidatureRepository->findByExampleField($idApp);
-        // dd($projets);
+        $projets=$user->getApprenant();
+        $candidatures=$this->getDoctrine()
+        ->getRepository(Candidature::class)
+        ->findBy(['apprenant'=>$projets->getId()]);
+        // dd($candidatures);
         return $this->render('apprenant_controlller/fiche.html.twig', [
-            'fiche' => $projets,
-            // 'candidature' => $cands,
-            
+            'info' => $projets,
+            'candidatures'=>$candidatures      
         ]);
 
 
