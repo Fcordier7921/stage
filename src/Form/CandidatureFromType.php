@@ -38,6 +38,8 @@ class CandidatureFromType extends AbstractType
                 'label' => 'date de relance',
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
+                'by_reference' => true,
+                'required' => false,
                 'attr'=>[
                     'class'=> 'form-control',
                     'style'=> 'width: 30%;'
@@ -47,6 +49,8 @@ class CandidatureFromType extends AbstractType
                 'label' => "date de l'entretien",
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
+                'by_reference' => true,
+                'required' => false,
                 'attr'=>[
                     'class'=> 'form-control',
                     'style'=> 'width: 30%;'
@@ -55,15 +59,10 @@ class CandidatureFromType extends AbstractType
             ->add('statut', ChoiceType::class, [
                 'choices' => [
                     'En attente' => 'En attente',
-                    'Relancée' => 'Relancée',
                     'Positif' => 'Positif',
                     'Négatif' => 'Négatif',
                 ],
-                'choice_attr' => [
-                    'Relancée' => ['data-color' => 'orange'],
-                    'Positif' => ['data-color' => 'green'],
-                    'Négatif' => ['data-color' => 'red'],
-                ],
+                
                 'attr'=>[
                     'class'=> 'form-control',
                     'style'=> 'width: 30%;'

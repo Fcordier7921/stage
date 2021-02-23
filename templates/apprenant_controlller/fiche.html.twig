@@ -10,7 +10,7 @@
         <div class="col-12 col-md-3">
        
          <div>
-            <img src="/uploads/brochures/{{info.avatar}}" style="height: 10rem; width: 10rem;" alt="fghfg">
+            <img src="/uploads/brochures/{{info.avatar}}" style="height: 20rem; width: 10rem;" alt="fghfg">
          </div>
             <h4>{{info.nom}}</h4>
                 <h6>{{info.prenom}}</h6>
@@ -37,22 +37,25 @@
                         <th>date de relance</th>
                         <th>date d'entretien</th>
                         <th>statuts de la candidature</th>
+                        <th></th>
                     </tr>
                 {% if candidatures is defined %}
                     
                 
                 {% for candidature in candidatures %}
-                    <tr>
+                    <tr style="{% if candidature.statut == 'Relancée' %} background-color: #ffd97d; {% elseif candidature.statut == 'Positif' %} background-color: #60d394; {% elseif candidature.statut == 'Négatif' %} background-color: #ee6055; {% endif %}">
                         <td>{{candidature.entreprise.nom}}</td>
                         <td>{{candidature.dateCandidature|date("m/d/Y")}}</td>
                         <td>{% if candidature.dateRelance is not null %}{{candidature.dateRelance |date("m/d/Y")}}{% endif %}</td>
                         <td>{% if candidature.dateEntretient is not null %}{{candidature.dateEntretient |date("m/d/Y")}}{% endif %}</td>
                         <td>{{candidature.statut}}</td>
+                        <td> <a href="{{path('upeadcandidature', {'id':candidature.id})}}">mettre a jour</a> </td>
                     </tr>
                 {% endfor %}
+                {% else %}
                 {% endif %}
                 </table>
-
+            </div>
             
 
         </div>

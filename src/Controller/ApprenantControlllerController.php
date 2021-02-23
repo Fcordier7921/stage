@@ -26,7 +26,7 @@ class ApprenantControlllerController extends AbstractController
 {
     
 
-
+    //redirection vers la fiche a remplire  si elle n'est pas emplie
     /**
      * 
      * @Route("/route/{id}", name="apprenant_route")
@@ -59,7 +59,7 @@ class ApprenantControlllerController extends AbstractController
 
     } 
 
-
+    //reseignement de la fiche apprenent
     /**
      * @Route("/register/{id}", name="apprenant_register")
      */
@@ -92,7 +92,7 @@ class ApprenantControlllerController extends AbstractController
             }else{
                 $task->setAvatar('5.png');
             }
-            $form->getData() ;
+            $form->getData();
             
             $task = $form->getData();
             $task->setUsers($user);
@@ -110,6 +110,8 @@ class ApprenantControlllerController extends AbstractController
             'form' =>$form->createView()
             ]);
     }
+
+    //gestion de l'affichage des apprenant
     /**
      * @Route("/fiche/{id}", name="apprenant_fiche")
      */
@@ -128,6 +130,8 @@ class ApprenantControlllerController extends AbstractController
 
 
     }  
+    
+    //modifier les info de la fiche apprenant
     /**
      * 
      *@route("/upeadaprenant/{id}", name="update_apprenant")

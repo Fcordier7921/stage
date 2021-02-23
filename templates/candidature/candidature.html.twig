@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CandidatureController!{% endblock %}
+{% block title %}Candidature de stagre{% endblock %}
 
 {% block body %}
     <div class="example-wrapper">
-    <h2>fiche apprenant</h2>
-    {{ form(form)}}
-       
+    <h2 class="text-center my-3">Candidature de stagre</h2>
     
+    {{ form_start(form) }}
+        {{ form_row(form.entreprise) }} 
+        <p class="my-2">Si l'entreprise n'est pas dans la liste vous pouvez l'ajouter en cliquant <a url="{{ path('entreprise_registere') }}">IcI</a></p>
+        <div class="my-3">{{ form_row(form.date_candidature) }}</div>
+        <div class="my-3">{{ form_row(form.date_relance) }}</div>
+        <div class="my-3">{{ form_row(form.date_entretient) }}</div>
+        <p class="mb-1">Statut</p>
+         <p class='form-control mb-3' style='width: 30%;'> En attente  </p>
+        <div style="display: none;">{{ form_row(form.statut) }}</div>
+    {{ form_end(form) }}
+       
+    </div>
 {% endblock %}

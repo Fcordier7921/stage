@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise a jour de la candidature de stage{% endblock %}
+
+{% block body %}
+    <div class="example-wrapper">
+    <h2 class="text-center my-3">Mise a jour de la candidature de stage</h2>
+    
+    {{ form_start(form) }}
+        
+         <div class="my-3">{{ form_row(form.entreprise) }} </div>
+        <div class="my-3">{{ form_row(form.date_candidature) }}</div>
+        <div class="my-3">{{ form_row(form.date_relance) }}</div>
+        <div class="my-3">{{ form_row(form.date_entretient) }}</div>
+        <div class="my-3">{{ form_row(form.statut) }}</div>
+        
+        
+    {{ form_end(form) }}
+       
+    
+{% endblock %}
