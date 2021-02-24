@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CandidatureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Entreprise;
 
 /**
  * @ORM\Entity(repositoryClass=CandidatureRepository::class)
@@ -47,10 +48,12 @@ class Candidature
     private $apprenant;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="candidature")
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="candidatures")
      * @ORM\JoinColumn(nullable=false)
      */
     private $entreprise;
+
+    
 
     public function getId(): ?int
     {
@@ -128,4 +131,5 @@ class Candidature
 
         return $this;
     }
+
 }

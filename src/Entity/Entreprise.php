@@ -54,16 +54,9 @@ class Entreprise
      */
     private $site_net;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="entreprise", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+    
 
-    /**
-     * @ORM\OneToMany(targetEntity=Candidature::class, mappedBy="entreprise")
-     */
-    private $candidature;
+   
 
     /**
      * @ORM\OneToMany(targetEntity=AnnonceEntreprise::class, mappedBy="entreprise")
@@ -75,11 +68,34 @@ class Entreprise
      */
     private $contact;
 
+    
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="entreprise")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Candidature::class, mappedBy="entreprise")
+     */
+    private $candidatures;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Apprenant::class, mappedBy="entreprise")
+     */
+    private $apprenants;
+
+    
+
     public function __construct()
     {
         $this->candidature = new ArrayCollection();
         $this->annoce_entreprise = new ArrayCollection();
         $this->contact = new ArrayCollection();
+        $this->apprenant = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        $this->candidatures = new ArrayCollection();
+        $this->apprenants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,47 +187,9 @@ class Entreprise
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
 
-    public function setUser(User $user): self
-    {
-        $this->user = $user;
 
-        return $this;
-    }
-
-    /**
-     * @return Collection|Candidature[]
-     */
-    public function getCandidature(): Collection
-    {
-        return $this->candidature;
-    }
-
-    public function addCandidature(Candidature $candidature): self
-    {
-        if (!$this->candidature->contains($candidature)) {
-            $this->candidature[] = $candidature;
-            $candidature->setEntreprise($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCandidature(Candidature $candidature): self
-    {
-        if ($this->candidature->removeElement($candidature)) {
-            // set the owning side to null (unless already changed)
-            if ($candidature->getEntreprise() === $this) {
-                $candidature->setEntreprise(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|AnnonceEntreprise[]
@@ -272,4 +250,95 @@ class Entreprise
 
         return $this;
     }
+
+    
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->user->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getEntreprise() === $this) {
+                $user->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Candidature[]
+     */
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
+    }
+
+    public function addCandidature(Candidature $candidature): self
+    {
+        if (!$this->candidatures->contains($candidature)) {
+            $this->candidatures[] = $candidature;
+            $candidature->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidature(Candidature $candidature): self
+    {
+        if ($this->candidatures->removeElement($candidature)) {
+            // set the owning side to null (unless already changed)
+            if ($candidature->getEntreprise() === $this) {
+                $candidature->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apprenant[]
+     */
+    public function getApprenants(): Collection
+    {
+        return $this->apprenants;
+    }
+
+    public function addApprenant(Apprenant $apprenant): self
+    {
+        if (!$this->apprenants->contains($apprenant)) {
+            $this->apprenants[] = $apprenant;
+            $apprenant->addEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApprenant(Apprenant $apprenant): self
+    {
+        if ($this->apprenants->removeElement($apprenant)) {
+            $apprenant->removeEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    
 }

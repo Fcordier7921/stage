@@ -42,10 +42,11 @@ class User implements UserInterface
     private $apprenant;
 
     /**
-     * @ORM\OneToOne(targetEntity=Entreprise::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="user")
      */
     private $entreprise;
 
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -149,16 +150,15 @@ class User implements UserInterface
         return $this->entreprise;
     }
 
-    public function setEntreprise(Entreprise $entreprise): self
+    public function setEntreprise(?Entreprise $entreprise): self
     {
-        // set the owning side of the relation if necessary
-        if ($entreprise->getUser() !== $this) {
-            $entreprise->setUser($this);
-        }
-
         $this->entreprise = $entreprise;
 
         return $this;
     }
+
+   
+
+    
     
 }

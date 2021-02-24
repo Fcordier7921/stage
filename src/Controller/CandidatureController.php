@@ -23,7 +23,7 @@ class CandidatureController extends AbstractController
     public function FromRegister($id, Request $request, EntityManagerInterface $manager, Apprenant $apprenant):Response
     {
         
-
+        
 
         $candidature= new Candidature();
         

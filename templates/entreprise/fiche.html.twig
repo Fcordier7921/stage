@@ -1,20 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Espace Entreprise{% endblock %}
+{% block title %}Espace entreprise{% endblock %}
 
 {% block body %}
 
 <div class="example-wrapper">
-    <h2 class="text-center my-3">fiche Entreprise</h2>
+    <h2 class="text-center my-3">Espace entreprise</h2>
     <div class="row">
         <div class="col-12 col-md-3">
-       
-         
+            <h4>{{info.nom}}</h4>
+                <h6>{{info.adress}}</h6>
+                <p>{{info.codePostal}}</p><br>
+                <p>{{info.ville}}</p><br>
+                <p>{{info.telephone}}</p><br>
+                <a href="{{info.email}}">{{info.email}}</a><br>
+                <a href="{{info.siteNet}}">{{info.siteNet}}</a><br>
+                
+        
+            <div>
+                <a type="button" href="{{path('update_entreprise', {'ide':info.id, 'idu':entreprise})}}" value="modifier">modifier</a>
+            </div>
            
         </div>
         
         <div class="col-12 col-md-8">
-            
+            <div class="my-3">
+            {# <a  type="button" href="{{path('candidature', {'id':info.id})}}" value="ajouter une demande de stage">ajouter une demande de stage</a> #}
+            </div>    
+                {# <table>
+                    <tr>
+                        <th>entreprise contacté</th>
+                        <th>date de candidatire</th>
+                        <th>date de relance</th>
+                        <th>date d'entretien</th>
+                        <th>statuts de la candidature</th>
+                        <th></th>
+                    </tr>
+                {% if candidatures is defined %}
+                    
+                
+                {% for candidature in candidatures %}
+                    <tr style="{% if candidature.statut == 'Relancée' %} background-color: #ffd97d; {% elseif candidature.statut == 'Positif' %} background-color: #60d394; {% elseif candidature.statut == 'Négatif' %} background-color: #ee6055; {% endif %}">
+                        <td>{{candidature.entreprise.nom}}</td>
+                        <td>{{candidature.dateCandidature|date("m/d/Y")}}</td>
+                        <td>{% if candidature.dateRelance is not null %}{{candidature.dateRelance |date("m/d/Y")}}{% endif %}</td>
+                        <td>{% if candidature.dateEntretient is not null %}{{candidature.dateEntretient |date("m/d/Y")}}{% endif %}</td>
+                        <td>{{candidature.statut}}</td>
+                        <td> <a href="{{path('upeadcandidature', {'id':candidature.id})}}">mettre a jour</a> </td>
+                    </tr>
+                {% endfor %}
+                {% else %}
+                {% endif %}
+                </table> #}
+
+            </div>
+
         </div>
     </div>
        

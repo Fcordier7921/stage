@@ -58,6 +58,29 @@ class ApprenantControlllerController extends AbstractController
 
 
     } 
+    
+    
+    //gestion de l'affichage des apprenant
+    /**
+     * @Route("/fiche/{id}", name="apprenant_fiche")
+     */
+    public function AffCandidature(User  $user) : Response
+    {
+        
+
+        $projets=$user->getApprenant();
+        $candidatures=$this->getDoctrine()
+        ->getRepository(Candidature::class)
+        ->findBy(['apprenant'=>$projets->getId()]);
+        
+
+        return $this->render('apprenant_controlller/fiche.html.twig', [
+            'info' => $projets,
+            'candidatures'=>$candidatures      
+        ]);
+
+
+    } 
 
     //reseignement de la fiche apprenent
     /**
@@ -92,6 +115,11 @@ class ApprenantControlllerController extends AbstractController
             }else{
                 $task->setAvatar('5.png');
             }
+            $speudoe=$task->getGit();
+            $speudoexplode= explode('/', $speudoe );
+            $speudo=$speudoexplode[3];
+            $task->setSpeudogithub($speudo);
+
             $form->getData();
             
             $task = $form->getData();
@@ -111,25 +139,7 @@ class ApprenantControlllerController extends AbstractController
             ]);
     }
 
-    //gestion de l'affichage des apprenant
-    /**
-     * @Route("/fiche/{id}", name="apprenant_fiche")
-     */
-    public function AffCandidature(User  $user) : Response
-    {
-       
-        $projets=$user->getApprenant();
-        $candidatures=$this->getDoctrine()
-        ->getRepository(Candidature::class)
-        ->findBy(['apprenant'=>$projets->getId()]);
-        // dd($candidatures);
-        return $this->render('apprenant_controlller/fiche.html.twig', [
-            'info' => $projets,
-            'candidatures'=>$candidatures      
-        ]);
-
-
-    }  
+    
     
     //modifier les info de la fiche apprenant
     /**
@@ -148,7 +158,7 @@ class ApprenantControlllerController extends AbstractController
             if(($form->get('avatar')->getData()) != null)
             {
                 $file = $form->get('avatar')->getData();
-                dd( $form->get('avatar')->getData());
+                
                 $fileName = uniqid(). '.' .$file->guessExtension();
              
                  try 
@@ -164,7 +174,11 @@ class ApprenantControlllerController extends AbstractController
                 }
                 $task->setAvatar($fileName);
             }
-
+            $speudoe=$task->getGit();
+            $speudoexplode= explode('/', $speudoe );
+            $speudo=$speudoexplode[3];
+            $task->setSpeudogithub($speudo);
+            
             $form->getData() ;
             
             $task = $form->getData();

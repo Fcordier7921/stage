@@ -128,10 +128,24 @@ class Apprenant
      */
     private $annoce_entreprise;
 
+    
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $speudogithub;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Entreprise::class, inversedBy="apprenants")
+     */
+    private $entreprise;
+
     public function __construct()
     {
         // $this->candidature = new ArrayCollection();
         $this->annoce_entreprise = new ArrayCollection();
+        $this->entreprises = new ArrayCollection();
+        $this->entreprise = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -392,6 +406,44 @@ class Apprenant
     public function removeAnnoceEntreprise(AnnonceEntreprise $annoceEntreprise): self
     {
         $this->annoce_entreprise->removeElement($annoceEntreprise);
+
+        return $this;
+    }
+
+   
+
+    public function getSpeudogithub(): ?string
+    {
+        return $this->speudogithub;
+    }
+
+    public function setSpeudogithub(?string $speudogithub): self
+    {
+        $this->speudogithub = $speudogithub;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entreprise[]
+     */
+    public function getEntreprise(): Collection
+    {
+        return $this->entreprise;
+    }
+
+    public function addEntreprise(Entreprise $entreprise): self
+    {
+        if (!$this->entreprise->contains($entreprise)) {
+            $this->entreprise[] = $entreprise;
+        }
+
+        return $this;
+    }
+
+    public function removeEntreprise(Entreprise $entreprise): self
+    {
+        $this->entreprise->removeElement($entreprise);
 
         return $this;
     }
