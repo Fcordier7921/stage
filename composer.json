@@ -15,6 +15,7 @@
         "easycorp/easyadmin-bundle": "^3.2",
         "helios-ag/fm-elfinder-bundle": "^10.1",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "pugx/autocompleter-bundle": "^1.7",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",

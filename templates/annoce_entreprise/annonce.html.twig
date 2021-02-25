@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offre de stage{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h2 class="text-center my-3">Espace entreprise: Offre de stage</h2>
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <h4>{{info.nom}}</h4>
+                <h6>{{info.adress}}</h6>
+                <p>{{info.codePostal}}</p><br>
+                <p>{{info.ville}}</p><br>
+                <p>{{info.telephone}}</p><br>
+                <a href="{{info.email}}">{{info.email}}</a><br>
+                <a href="{{info.siteNet}}">{{info.siteNet}}</a><br>
+                
+        
+            <div>
+                <a type="button" href="{{path('update_entreprise', {'ide':info.id, 'idu':entreprise})}}" value="modifier">modifier</a>
+            </div>
+            <div>
+                <h4>Les contacts de l'entreprise {{info.nom}} :</h4>
+                    <p>Pour ajouter un colaborateur cliqué<a href="{{path('contact_registere', {'idu':entreprise, 'ide':info.id})}}" class="mx-5">IcI</a></p>
+                
+                {% if contacts !=null %}
+                    {% for contact in contacts %}
+                    
+                        <h5>{{contact.nom}}</h5>
+                        <h6>{{contact.prenom}}</h6>
+                        <p>{{contact.telephone}}</p>
+                        <p>{{contact.email}}</p>
+                        <a href="{{path('contact_Updeat', {'idc':contact.id,'idu':entreprise})}}">Modifier</a>
+                        
+                {% endfor %}
+                    
+                {% else %}
+                    <p>Merci d'ajouter un contact</p>   
+                {% endif %}
+                
+            </div>
+           
+        </div>
+        
+        <div class="col-12 col-md-8">
+            <div class="my-3">
+            
+            
+
+        </div>
+    </div>
+       
+    
+</div>
+{% endblock %}

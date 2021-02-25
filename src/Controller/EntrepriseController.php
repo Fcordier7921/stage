@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Entreprise;
 use App\Entity\User;
 use App\Form\EntrepriseFromType;
+use App\Form\searchFromType;
 use App\Repository\ApprenantRepository;
 use App\Repository\CandidatureRepository;
 use App\Repository\ContactRepository;
@@ -55,7 +56,7 @@ class EntrepriseController extends AbstractController
     /**
      * @Route("/entreprise/fiche/{id}", name="entreprise_fiche")
      */
-    public function AffCandidature(User  $user, ContactRepository $contactRepository, CandidatureRepository $candidatureRepository, ApprenantRepository $apprenantRepository) : Response
+    public function AffCandidature(Request $request, User  $user, ContactRepository $contactRepository, CandidatureRepository $candidatureRepository, ApprenantRepository $apprenantRepository) : Response
     {
        
         $projets=$user->getEntreprise();//info de la fiche entre rpise
@@ -80,20 +81,30 @@ class EntrepriseController extends AbstractController
         $resultApprentDispo=array_diff($IdApprenant, $IdPositiftrie);
         
         $ultime=$apprenantRepository->findBy(['id'=>$resultApprentDispo]);
+        //gertion de la barre de recherche
+        // $searchForm=$this->createForm(searchFromType::class);
+        // $resutSearch=$ultime;
         
-      
-        
+        // if ($searchForm->handleRequest($request)->isSubmitted() && $searchForm->isValid()) 
+        // {
+           
+        //     $criteria= $searchForm->getData();
+        //     dd($searchForm);
+        //     $resutSearch=$apprenantRepository->searchlist($criteria);
+        // }
         
         return $this->render('entreprise/fiche.html.twig', [
             'info' => $projets,
             'entreprise'=>$user->getId(),
             'contacts'=>$contact,
             'appres'=>$ultime,
+            // 'search_From'=> $searchForm->createView(),
             
         ]);
 
 
     } 
+    
 
     //reseignement de la fiche entreprise
     /**
