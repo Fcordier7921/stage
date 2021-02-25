@@ -157,6 +157,8 @@ class ApprenantFromType extends AbstractType
                 ],
             ])
             ->add('promo_anne', DateType::class, [
+                'label'=>"date de début de formation",
+                'format' => 'ddMMyyyy',
                 'attr'=>[
                     
                     'style'=> 'width: 30%;'

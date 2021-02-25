@@ -21,7 +21,6 @@
 				<p>{{info.codePostal}}</p><br>
 				<p>{{info.ville}}</p><br>
 				<p>{{info.telephone}}</p><br>
-				<p>{{info.ville}}</p><br>
                 <p>comptétences:<br>
                 {{info.competences}}</p><br>
 				<a href="{{info.email}}">{{info.email}}</a><br>
@@ -29,7 +28,7 @@
                 <a href="{{info.git}}">{{info.git}}</a><br>
                 <a href="{{info.cv}}">{{info.cv}}</a><br>
 				<h5>Promo</h5>
-				<p>Anné : {{info.promoAnne|date('Y-m-d') }}</p>
+				<p>Anné : {{info.promoAnne|date('Y')}}/{{(info.promoAnne|date('Y'))+1 }}</p>
 				<p>Ville : {{info.promoVille}}</p>
 				<div>
 					<a type="button" href="{{path('update_apprenant', {'id':info.id})}}" value="modifier">modifier</a>

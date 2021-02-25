@@ -82,6 +82,7 @@ class Apprenant
 
     /**
      * @ORM\Column(type="date")
+     * @var string A "Y" formatted value
      */
     private $promo_anne;
 

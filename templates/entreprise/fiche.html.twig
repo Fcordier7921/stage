@@ -20,39 +20,76 @@
             <div>
                 <a type="button" href="{{path('update_entreprise', {'ide':info.id, 'idu':entreprise})}}" value="modifier">modifier</a>
             </div>
+            <div>
+                <h4>Les contacts de l'entreprise {{info.nom}} :</h4>
+               
+                
+                {% if contacts !=null %}
+                    {% for contact in contacts %}
+                    
+                        <h5>{{contact.nom}}</h5>
+                        <h6>{{contact.prenom}}</h6>
+                        <p>{{contact.telephone}}</p>
+                        <p>{{contact.email}}</p>
+                        <a href="{{path('contact_Updeat', {'idc':contact.id,'idu':entreprise})}}">Modifier</a>
+                        
+                {% endfor %}
+                    
+                {% else %}
+                    <p>Merci d'ajouter un contact</p>   
+                {% endif %}
+                
+            </div>
            
         </div>
         
         <div class="col-12 col-md-8">
             <div class="my-3">
-            {# <a  type="button" href="{{path('candidature', {'id':info.id})}}" value="ajouter une demande de stage">ajouter une demande de stage</a> #}
-            </div>    
-                {# <table>
+            <a href="{{path('contact_registere', {'idu':entreprise, 'ide':info.id})}}" class="mx-5">Ajouter un contact</a>
+            <a  type="button" href="" value="ajouter une demande de stage">ajouter une offre de stage</a> 
+            </div>
+            {% if appres != null %}    
+                 <table>
                     <tr>
-                        <th>entreprise contacté</th>
-                        <th>date de candidatire</th>
-                        <th>date de relance</th>
-                        <th>date d'entretien</th>
-                        <th>statuts de la candidature</th>
-                        <th></th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Ville</th>
+                        <th>Telephone</th>
+                        <th>Email</th>
+                        <th>Portfolio</th>
+                        <th>Github</th>
+                        <th>lien vers cv</th>
+                        <th>Les compétences</th>
+                        <th>La mobilité géographique</th>
+                        <th>Zone de mobilité géographique</th>
+                        <th>Promo et ville du centre de formation</th>
                     </tr>
-                {% if candidatures is defined %}
+                
                     
                 
-                {% for candidature in candidatures %}
-                    <tr style="{% if candidature.statut == 'Relancée' %} background-color: #ffd97d; {% elseif candidature.statut == 'Positif' %} background-color: #60d394; {% elseif candidature.statut == 'Négatif' %} background-color: #ee6055; {% endif %}">
-                        <td>{{candidature.entreprise.nom}}</td>
-                        <td>{{candidature.dateCandidature|date("m/d/Y")}}</td>
-                        <td>{% if candidature.dateRelance is not null %}{{candidature.dateRelance |date("m/d/Y")}}{% endif %}</td>
-                        <td>{% if candidature.dateEntretient is not null %}{{candidature.dateEntretient |date("m/d/Y")}}{% endif %}</td>
-                        <td>{{candidature.statut}}</td>
-                        <td> <a href="{{path('upeadcandidature', {'id':candidature.id})}}">mettre a jour</a> </td>
-                    </tr>
+                {% for appre in appres %}
+                    {% if ((appre.promoAnne |date("Y"))>=("now"|date("Y"))-1) or (appre.promoAnne |date("Y"))==("now"|date("Y"))%}
+                        <tr>
+                            <td>{{appre.nom}}</td>
+                            <td>{{appre.prenom}}</td>
+                            <td>{{appre.ville}}</td>
+                            <td>{{appre.telephone}}</td>
+                            <td>{{appre.email}}</td>
+                            <td>{{appre.portfolio}}</td>
+                            <td>{{appre.git}}</td>
+                            <td>{{appre.cv}}</td>
+                            <td>{{appre.competences}}</td>
+                            <td>{{appre.mobilit}}</td>
+                            <td>{{appre.zoneGeographique}}</td>
+                            <td>{{(appre.promoAnne |date("Y"))}}/{{(appre.promoAnne |date("Y"))+1}}<br>{{appre.promoVille}}</td>   
+                        </tr>
+                    {% endif %}
                 {% endfor %}
-                {% else %}
-                {% endif %}
-                </table> #}
-
+            
+                </table> 
+            {% else %}{#s'il n'y a pas d'appreant #}
+            <h2>aucune stagiaire ne recherche de stage</h2>
+            {% endif %}
             </div>
 
         </div>

@@ -3,15 +3,15 @@
 namespace App\Controller;
 
 
-
 use App\Entity\Entreprise;
 use App\Entity\User;
 use App\Form\EntrepriseFromType;
-
+use App\Repository\ApprenantRepository;
+use App\Repository\CandidatureRepository;
+use App\Repository\ContactRepository;
 use App\Repository\EntrepriseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,15 +55,41 @@ class EntrepriseController extends AbstractController
     /**
      * @Route("/entreprise/fiche/{id}", name="entreprise_fiche")
      */
-    public function AffCandidature(User  $user) : Response
+    public function AffCandidature(User  $user, ContactRepository $contactRepository, CandidatureRepository $candidatureRepository, ApprenantRepository $apprenantRepository) : Response
     {
        
-        $projets=$user->getEntreprise();
+        $projets=$user->getEntreprise();//info de la fiche entre rpise
+        $contact=$contactRepository->findBy(['entreprise'=>$projets->getId()]);
+
+        //resortire les id des apprenant ayant trouver un stage
+        $positif=$candidatureRepository->findBy(['statut'=>'Positif']);
+        $Idpositif=[];
+        for($i=0; $i<(count($positif)); $i++){
+        array_push($Idpositif, $positif[$i]->getApprenant()->getId() );
+        }
+        
+        $IdPositiftrie=array_unique($Idpositif);
+        //resortire les id de tout les apprenants
+        $apprenant=$apprenantRepository->findALL();
+        $IdApprenant=[];
+        for($i=0; $i<(count($apprenant)); $i++){
+        array_push($IdApprenant, $apprenant[$i]->getId() );
+        }
+        
+        //obtenir les id des apprenant n'ayant pas de stage 
+        $resultApprentDispo=array_diff($IdApprenant, $IdPositiftrie);
+        
+        $ultime=$apprenantRepository->findBy(['id'=>$resultApprentDispo]);
+        
+      
         
         
         return $this->render('entreprise/fiche.html.twig', [
             'info' => $projets,
-            'entreprise'=>$user->getId()
+            'entreprise'=>$user->getId(),
+            'contacts'=>$contact,
+            'appres'=>$ultime,
+            
         ]);
 
 
@@ -91,6 +117,7 @@ class EntrepriseController extends AbstractController
             $task->setUser($user);
             
             $id= $user ->getId();
+            
             $manager->persist($task);
             $manager->flush();
             return $this->redirect('/entreprise/fiche/'.$id);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use App\Repository\EntrepriseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -96,14 +97,14 @@ class Contact
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
+    public function getEntreprise()
     {
         return $this->entreprise;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): self
+    public function setEntreprise(?EntrepriseRepository $entreprise, $id): self
     {
-        $this->entreprise = $entreprise;
+        $this->entreprise = $entreprise->findOneBy(['id'=>$id]);
 
         return $this;
     }
