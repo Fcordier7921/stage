@@ -24,7 +24,7 @@ class ContactEFromType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => "Merci d'entré votre nom de ville",
+                        'message' => "Merci d'entré votre nom ",
                     ])
                 ],
             ])
@@ -35,7 +35,7 @@ class ContactEFromType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => "Merci d'entré votre nom de ville",
+                        'message' => "Merci d'entré votre prénom",
                     ])
                 ],
             ])

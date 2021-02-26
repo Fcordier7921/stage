@@ -36,6 +36,7 @@ class AnnonceEntreprise
 
     /**
      * @ORM\Column(type="boolean")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $etat_validation;
 
@@ -140,9 +141,9 @@ class AnnonceEntreprise
         return $this->entreprise;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): self
+    public function setEntreprise($id)
     {
-        $this->entreprise = $entreprise;
+        $this->entreprise = $id;
 
         return $this;
     }

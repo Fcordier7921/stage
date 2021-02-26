@@ -109,7 +109,7 @@ class EntrepriseFromType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => "Merci d'entré votre lien vers votre portefolio",
+                        'message' => "Merci d'entré votre lien vers votre page web",
                     ])
                 ],
             ])

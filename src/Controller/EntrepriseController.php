@@ -60,6 +60,7 @@ class EntrepriseController extends AbstractController
     {
        
         $projets=$user->getEntreprise();//info de la fiche entre rpise
+        
         $contact=$contactRepository->findBy(['entreprise'=>$projets->getId()]);
 
         //resortire les id des apprenant ayant trouver un stage
@@ -121,16 +122,16 @@ class EntrepriseController extends AbstractController
         $forme =$this->createForm(EntrepriseFromType::class, $task); 
         $forme->handleRequest($request);
         if ($forme->isSubmitted() && $forme->isValid()) {
-           
-            $forme->getData();
-            
+                       
             $task = $forme->getData();
-            $task->setUser($user);
             
+            $task->addUser($user);
             $id= $user ->getId();
             
+            $manager= $this->getDoctrine()->getManager();
             $manager->persist($task);
             $manager->flush();
+            
             return $this->redirect('/entreprise/fiche/'.$id);
 
         }
@@ -146,7 +147,7 @@ class EntrepriseController extends AbstractController
     //modifier les info de la fiche entreprise
     /**
      * 
-     *@route("/upeadentreprise/{ide}/{idu}", name="update_entreprise")
+     *@route("/entreprise/upeadentreprise/{ide}/{idu}", name="update_entreprise")
      */
     public function updeatApprenant($ide, $idu, Request $request, EntityManagerInterface $manager, EntrepriseRepository $apps)
     {
@@ -162,8 +163,9 @@ class EntrepriseController extends AbstractController
             $task = $form->getData();
             
         
-            // $manager->persist($task);
+            $manager->persist($task);
             $manager->flush();
+            
             return $this->redirect('/entreprise/fiche/'.$idu);
 
         }

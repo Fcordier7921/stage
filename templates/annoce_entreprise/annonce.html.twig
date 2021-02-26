@@ -21,6 +21,7 @@
                 <a type="button" href="{{path('update_entreprise', {'ide':info.id, 'idu':entreprise})}}" value="modifier">modifier</a>
             </div>
             <div>
+            
                 <h4>Les contacts de l'entreprise {{info.nom}} :</h4>
                     <p>Pour ajouter un colaborateur cliqué<a href="{{path('contact_registere', {'idu':entreprise, 'ide':info.id})}}" class="mx-5">IcI</a></p>
                 
@@ -45,7 +46,25 @@
         
         <div class="col-12 col-md-8">
             <div class="my-3">
-            
+            <a href="{{path('annonce_register', {'idu':entreprise, 'ide':info.id})}}">Ajouter une offre de stage</a>
+            {% if annonces !=null %}
+                
+                    
+                
+                    {% for annonce in annonces %}
+                    
+                        {% if annonce.etatValidation != false %}
+                            <h5>{{annonce.titre}}</h5>
+                            <h6>{{annonce.contenue|striptags}}</h6>
+                            <p>{{annonce.specification}}</p>
+                            
+                            <a href="{{path('annonce_updeat', {'idu':entreprise, 'ide':info.id, 'ida':annonce.id})}}">Modifier</a>
+                        {% endif %}
+                {% endfor %}
+                    
+                {% else %}
+                    <p>Merci une offre de stage</p>   
+                {% endif %}
             
 
         </div>

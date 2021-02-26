@@ -2,43 +2,134 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\AnnonceEntreprise;
 
-
+use App\Form\AnnonceEFromType;
+use App\Repository\AnnonceEntrepriseRepository;
+use App\Repository\ApprenantRepository;
 use App\Repository\ContactRepository;
 use App\Repository\EntrepriseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AnnoceEntrepriseController extends AbstractController
 {
-    /**
-     * @Route("/annoce/entreprise", name="annoce_entreprise")
-     */
-    public function index(): Response
-    {
-        return $this->render('annoce_entreprise/index.html.twig', [
-            'controller_name' => 'AnnoceEntrepriseController',
-        ]);
-    }
+    
     //gestion de l'affichage pour l'interface entreprise des annonce
     /**
-     * @Route("/entreprise/annoce/{ide}/{idu}", name="entreprise_annoce")
+     * @Route("/entreprise/annoce/{idu}/{ide}", name="entreprise_annoce")
      */
-    public function AffCandidature($ide,$idu, ContactRepository $contactRepository, EntrepriseRepository $entrepriseRepository ) : Response
-    {
-
-       
+    public function AffAnnoce($idu,$ide, ContactRepository $contactRepository, EntrepriseRepository $entrepriseRepository, AnnonceEntrepriseRepository $annonceEntreprise ) : Response
+    {       
         $projets=$entrepriseRepository->findOneBy(['id'=>$ide]);//info de la fiche entrerpise
         
-        $contact=$contactRepository->findBy(['entreprise'=>$projets->getId()]);//info des contacte entreprise
-
+        $contact=$contactRepository->findBy(['entreprise'=>$ide]);//info des contacte entreprise
+        $annonce=$annonceEntreprise->findBy(['entreprise'=>$ide]);
+        // dd($annonce);
+        
         return $this->render('annoce_entreprise/annonce.html.twig', [
             'info' => $projets,
-            'entreprise'=>$ide,
+            'entreprise'=>$idu,
             'contacts'=>$contact,
+            'annonces'=>$annonce
             
         ]);
+    }
+
+    //gestion de l'affichage pour l'interface pour les stagiaire pour voir les annoce
+    /**
+     * @Route("/apprenant/annoce/{id}", name="apprenant_annoce")
+     */
+    public function AffAnnonceApprenat($id, AnnonceEntrepriseRepository $annonceEntreprise, ApprenantRepository $apprenantRepository, EntrepriseRepository $entreprise ) : Response
+    {       
+        
+       $apprenant=$apprenantRepository->findBy(['id'=>$id]);
+       $annonce=$annonceEntreprise->findALL();
+       
+       
+        // for($i=0; $i<=count($annonceEm); $i++){
+        //         $entrepriseId=$annonceEm[$i]->getEntreprise()->getId();
+               
+        //         $DataEntreprise=$entreprise->findBy(['id'=> $entrepriseId]);
+        //         $annonce= $annonceEm[$i]->setEntreprise($DataEntreprise);
+               
+        // }
+                
+        
+       
+        
+        return $this->render('annoce_entreprise/annonceApprenant.html.twig', [
+            'info'=>$apprenant[0],
+            'annonces'=>$annonce
+        ]);
+    }
+
+    //Ajout d'une offre de stage
+    /**
+     * @Route("/entreprise/annoce/register/{idu}/{ide}", name="annonce_register")
+     */
+    public function FromRegister($idu, $ide, Request $request, EntityManagerInterface $manager, EntrepriseRepository $entreprise):Response
+    {
+        
+
+
+        $task= new AnnonceEntreprise();
+        
+       
+        $form =$this->createForm(AnnonceEFromType::class, $task); 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $task = $form->getData();
+            $identrepriseData=$entreprise->findBy(['id'=>$ide]);
+            $identreprise=$identrepriseData;
+            
+            $task->setEntreprise($identreprise[0]);
+            $task->setEtatValidation(0);
+            
+            $manager->persist($task);
+            $manager->flush();
+            return $this->redirect("/entreprise/annoce/$idu/$ide");
+            
+        }
+    
+        return $this->render('annoce_entreprise/annonceRegister.html.twig', [
+            'form' =>$form->createView()
+            ]);
+    }
+
+    //Modifier une offre de stage
+    /**
+     * @Route("/entreprise/annoce/Updeat/{idu}/{ide}/{ida}", name="annonce_updeat")
+     */
+    public function FromUpdeat($idu, $ide,$ida, Request $request, EntityManagerInterface $manager, EntrepriseRepository $entreprise, AnnonceEntrepriseRepository $annonceEntrepriseRepository):Response
+    {
+        
+        $task=$annonceEntrepriseRepository->findOneBy(['id'=>$ida]);
+
+        $form =$this->createForm(AnnonceEFromType::class, $task); 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $task = $form->getData();
+            $identrepriseData=$entreprise->findBy(['id'=>$ide]);
+            $identreprise=$identrepriseData;
+            
+            $task->setEntreprise($identreprise[0]);
+            $task->setEtatValidation(0);
+            
+            
+            $manager->persist($task);
+            $manager->flush();
+            return $this->redirect("/entreprise/annoce/$idu/$ide");
+            
+        }
+    
+        return $this->render('annoce_entreprise/annonceRegister.html.twig', [
+            'form' =>$form->createView()
+            ]);
     }
 }
