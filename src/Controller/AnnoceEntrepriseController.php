@@ -41,29 +41,30 @@ class AnnoceEntrepriseController extends AbstractController
 
     //gestion de l'affichage pour l'interface pour les stagiaire pour voir les annoce
     /**
-     * @Route("/apprenant/annoce/{id}", name="apprenant_annoce")
+     * @Route("/apprenant/annoce/{id}/{idu}", name="apprenant_annoce")
      */
-    public function AffAnnonceApprenat($id, AnnonceEntrepriseRepository $annonceEntreprise, ApprenantRepository $apprenantRepository, EntrepriseRepository $entreprise ) : Response
+    public function AffAnnonceApprenat($id, $idu, AnnonceEntrepriseRepository $annonceEntreprise, ApprenantRepository $apprenantRepository, EntrepriseRepository $entreprise ) : Response
     {       
         
        $apprenant=$apprenantRepository->findBy(['id'=>$id]);
-       $annonce=$annonceEntreprise->findALL();
+       $annonceEm=$annonceEntreprise->findALL();
        
-       
-        // for($i=0; $i<=count($annonceEm); $i++){
-        //         $entrepriseId=$annonceEm[$i]->getEntreprise()->getId();
+        $nbEntreprise=count($annonceEm);
+        for($i=0; $i<$nbEntreprise; $i++){
+                $entrepriseId=$annonceEm[$i]->getEntreprise()->getId();
                
-        //         $DataEntreprise=$entreprise->findBy(['id'=> $entrepriseId]);
-        //         $annonce= $annonceEm[$i]->setEntreprise($DataEntreprise);
+                $DataEntreprise=$entreprise->findBy(['id'=> $entrepriseId]);
+                 $annonceEm[$i]->setEntreprise($DataEntreprise[0]);
                
-        // }
+        }
                 
         
        
         
         return $this->render('annoce_entreprise/annonceApprenant.html.twig', [
             'info'=>$apprenant[0],
-            'annonces'=>$annonce
+            'annonces'=>$annonceEm,
+            'entreprise'=>$idu
         ]);
     }
 
@@ -131,5 +132,19 @@ class AnnoceEntrepriseController extends AbstractController
         return $this->render('annoce_entreprise/annonceRegister.html.twig', [
             'form' =>$form->createView()
             ]);
+    }
+
+    //supprimer une offre de stage
+    /**
+     * @Route("/entreprise/annoce/remove/{idu}/{ide}/{ida}", name="annonce_remove")
+     */
+    public function FromRemov($idu, $ide,$ida, Request $request, EntityManagerInterface $manager, AnnonceEntrepriseRepository $annonceEntrepriseRepository):Response
+    {
+        
+        $task=$annonceEntrepriseRepository->findOneBy(['id'=>$ida]);
+            $manager->remove($task);
+            $manager->flush();
+            return $this->redirect("/entreprise/annoce/$idu/$ide");
+        
     }
 }

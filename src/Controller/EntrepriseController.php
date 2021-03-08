@@ -82,6 +82,7 @@ class EntrepriseController extends AbstractController
         $resultApprentDispo=array_diff($IdApprenant, $IdPositiftrie);
         
         $ultime=$apprenantRepository->findBy(['id'=>$resultApprentDispo]);
+        
         //gertion de la barre de recherche
         // $searchForm=$this->createForm(searchFromType::class);
         // $resutSearch=$ultime;

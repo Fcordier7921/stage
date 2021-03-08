@@ -67,7 +67,7 @@ class ApprenantControlllerController extends AbstractController
     public function AffCandidature(User  $user) : Response
     {
         
-
+        $idu=$user->getId();
         $projets=$user->getApprenant();
         $candidatures=$this->getDoctrine()
         ->getRepository(Candidature::class)
@@ -76,7 +76,8 @@ class ApprenantControlllerController extends AbstractController
 
         return $this->render('apprenant_controlller/fiche.html.twig', [
             'info' => $projets,
-            'candidatures'=>$candidatures      
+            'candidatures'=>$candidatures,
+            'idu' => $idu
         ]);
 
 

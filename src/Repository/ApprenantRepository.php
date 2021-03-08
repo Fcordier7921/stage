@@ -47,13 +47,22 @@ class ApprenantRepository extends ServiceEntityRepository
         ;
     }
     
+    /**
+     * conter les apprenant
+     *
+     * @return int|mixed|string
+     */
     public function countAllApprenant()
     {
         $queryBuilder = $this->createQueryBuilder('a');
         $queryBuilder->select('COUNT(a.id) as value');
-
+        
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
+
+   
+
 
 
 }

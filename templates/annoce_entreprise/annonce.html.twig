@@ -19,6 +19,7 @@
         
             <div>
                 <a type="button" href="{{path('update_entreprise', {'ide':info.id, 'idu':entreprise})}}" value="modifier">modifier</a>
+                
             </div>
             <div>
             
@@ -53,13 +54,19 @@
                 
                     {% for annonce in annonces %}
                     
-                        {% if annonce.etatValidation != false %}
+                        
                             <h5>{{annonce.titre}}</h5>
                             <h6>{{annonce.contenue|striptags}}</h6>
                             <p>{{annonce.specification}}</p>
+                            <p>Etat de validation de l'annace :{%  if annonce.	etatValidation != null %} 
+                                Annonce publier
+                            {% else %}
+                                Annoce en cour de validation
+                            {% endif %}</p>
                             
                             <a href="{{path('annonce_updeat', {'idu':entreprise, 'ide':info.id, 'ida':annonce.id})}}">Modifier</a>
-                        {% endif %}
+                            <a href="{{path('annonce_remove', {'idu':entreprise, 'ide':info.id, 'ida':annonce.id})}}" onclick="return confirm('êtes-vous sûr de vouloir supprimer {{ annonce.titre}}')">suprimer</a>
+                        
                 {% endfor %}
                     
                 {% else %}

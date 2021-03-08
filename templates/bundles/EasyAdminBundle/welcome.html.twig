@@ -5,35 +5,28 @@
 {% block content %}
     <div class="content">
 
-        <div class="container">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#"></a>
-                </li>
-                <li class="breadcrumb-item active"> </li>
-            </ol>
-            <!-- Icon Cards-->
-        </div>
 
         <div class="container">
             <div class="row">
                 <h1> Tableau de bord </h1>
             </div>
+            <h2>promo Actuel</h2>
             <div class="row mt-3">
+            
                 <div class="col-4 alert-success">
-                    <span class="display-3">{{ countAllUser['value'] }}  </span> Utilisateurs
+                    <span class="display-3">{{ apprenentCandidaturePositif }} 
+                     </span> Apprenant avec un stage
+                </div>
+                <div class="col-4 alert-danger">
+                    <span class="display-3">{{ apprenentEnRecheche }}  </span> Apprenant sans stage
                 </div>
                 <div class="col-4 alert-dark">
-                    <span class="display-3">{{ countAllApprenant['value'] }}  </span> Apprenant
-                </div>
-                <div class="col-4 alert-dark">
-                    <span class="display-3">{{ countAllEntreprise['value'] }}  </span> Entreprise
+                    <span class="display-3">{{ countAllApprenant }}  </span> Nombre d'apprenants
                 </div>
             </div>
             <div class="row mt-5">
                 <div class="col-12">
-                    <h3>tableau de bord </h3>
+                    <h3>Liste des stagiaire </h3>
 
                     <ul class="list-group">
                        

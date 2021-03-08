@@ -44,7 +44,7 @@
 			
 				<div class="my-3">
 				<a  type="button" href="{{path('candidature', {'id':info.id})}}" value="ajouter une demande de stage">ajouter une demande de stage</a>
-				<a  type="button" href="{{path('apprenant_annoce', {'id':info.id})}}" value="ajouter une demande de stage">Voire les offres de stages</a>
+				<a  type="button" href="{{path('apprenant_annoce', {'id':info.id, 'idu':idu})}}" value="ajouter une demande de stage">Voire les offres de stages</a>
 				</div>
 	   		
                     
@@ -73,9 +73,9 @@
 					
 						<tr style="{% if candidature.statut == 'Relancée' %} background-color: #ffd97d; {% elseif candidature.statut == 'Positif' %} background-color: #60d394; {% elseif candidature.statut == 'Négatif' %} background-color: #ee6055; {% endif %}">
 							<td>{{candidature.entreprise.nom}}</td> 
-							<td>{{candidature.dateCandidature|date("m/d/Y")}}</td>
-							<td>{% if candidature.dateRelance is not null %}{{candidature.dateRelance |date("m/d/Y")}}{% endif %}</td>
-							<td>{% if candidature.dateEntretient is not null %}{{candidature.dateEntretient |date("m/d/Y")}}{% endif %}</td>
+							<td>{{candidature.dateCandidature|date("d/m/Y")}}</td>
+							<td>{% if candidature.dateRelance is not null %}{{candidature.dateRelance |date("d/m/Y")}}{% endif %}</td>
+							<td>{% if candidature.dateEntretient is not null %}{{candidature.dateEntretient |date("d/m/Y")}}{% endif %}</td>
 							<td>{{candidature.statut}}</td>
 							<td> <a href="{{path('upeadcandidature', {'id':candidature.id})}}">mettre a jour</a> </td>
 						</tr>

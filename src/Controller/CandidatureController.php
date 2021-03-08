@@ -65,7 +65,6 @@ class CandidatureController extends AbstractController
      */
     public function FromUpdeat($id, Request $request, EntityManagerInterface $manager, CandidatureRepository $CandidatureRepository):Response
     {
-        
 
         $candidature=$CandidatureRepository->findOneBy(['id'=>$id]);
         $apprenant=$candidature->getApprenant();  

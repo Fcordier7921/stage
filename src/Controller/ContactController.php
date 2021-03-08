@@ -94,5 +94,20 @@ class ContactController extends AbstractController
     }
 
 
+    //suprimer de la fiche contact entreprise
+    /**
+     * @Route("/entreprise/contactRemove/{idc}/{idu}", name="contact_remove")
+     */
+    public function FromRemove($idc, $idu, Request $request, EntityManagerInterface $manager, ContactRepository $contactr ):Response
+    {
+
+        $task=$contactr->findOneBy(['id'=>$idc]);
+            $manager->remove($task);
+            $manager->flush();
+            return $this->redirect("/entreprise/fiche/$idu");
+        
+    }
+
+
     
 }

@@ -45,5 +45,36 @@ class CandidatureRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+
+    //renvoi tout la apprenant ayant trouver un stage
+    public function countAppPositif()
+    {
+        $builder=$this->createQueryBuilder('p');
+        $query=$builder->andWhere('p.statut = :val')
+                        ->setParameter('val', 'Positif')
+                        ->getQuery()
+                        ->getResult();
+        $queryDoublon=[];
+        $queryResult=[];
+            for($i=0; $i<count($query); $i++)
+            {
+              $idApprenant=$query[$i]->getApprenant()->getId();
+              
+                if(in_array($idApprenant, $queryDoublon))
+                {  
+                    //ne rien faire
+                }
+                else
+                {
+                    array_push($queryDoublon, $idApprenant);
+                    array_push($queryResult, $query[$i]);
+                }
+               
+            }
+                     
+        
+        return $queryResult;
+    }
     
 }

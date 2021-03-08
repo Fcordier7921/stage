@@ -41,26 +41,32 @@
         </div>
         
          <div class="col-12 col-md-8">
-		   
+		   <a  type="button" href="{{path('apprenant_fiche', {'id':entreprise})}}" >Retour Fiche personelle</a>
             {% if annonces !=null %}
                 
-                    
-                
-                    {% for annonce in annonces %}
-                    
-                        {% if annonce.etatValidation != false %}
-                            <h5>{{annonce.titre}}</h5>
-                            <h6>{{annonce.contenue|striptags}}</h6>
-                            <p>{{annonce.specification}}</p>
-                           <pre>
-                               {{ dump(annonce) }}
-                           </pre> 
-                        {% endif %}
-                {% endfor %}
-                    
-                {% else %}
+               <div class="d-flex col-12">     
+					<div class="col-12 ">
+						{% for annonce in annonces %}
+						
+							{% if annonce.etatValidation != false %}
+								<h5>{{annonce.titre}}</h5>
+								<h6>{{annonce.contenue|striptags}}</h6>
+								<p>{{annonce.specification}}</p>
+								<p>publier par l'entreprise: </p>
+								<p>{{annonce.entreprise.nom}}</p>
+								<p>{{annonce.entreprise.adress}}</p>
+								<p>{{annonce.entreprise.codePostal}}</p>
+								<p>{{annonce.entreprise.ville}}</p>
+								<p>{{annonce.entreprise.telephone}}</p>
+								<p>{{annonce.entreprise.email}}</p>
+								<p>{{annonce.entreprise.siteNet}}</p>
+							{% endif %}
+                		{% endfor %}
+					</div>
+                </div>    
+            {% else %}
                     <p>Il n'y a pas d'annonce disponible</p>   
-                {% endif %}
+            {% endif %}
         </div>  
     </div>
        
