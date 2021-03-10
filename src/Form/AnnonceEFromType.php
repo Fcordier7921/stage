@@ -23,7 +23,7 @@ class AnnonceEFromType extends AbstractType
                 ]
             ])
             ->add('contenue', CKEditorType::class, [
-                'label'=>'Contenu de vorttre offre de stage :',
+                'label'=>'Contenu de votre offre de stage :',
             ])
             ->add('specification', TextType::class, [
                 'label'=>'specification :',
