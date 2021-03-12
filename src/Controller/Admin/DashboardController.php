@@ -18,7 +18,7 @@ use App\Repository\EntrepriseRepository;
 use App\Repository\ApprenantRepository;
 use App\Repository\ContactRepository;
 use App\Repository\UserRepository;
-use DateTime;
+
 
 class DashboardController extends AbstractDashboardController
 {
@@ -124,7 +124,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Stage');
+            ->setTitle('Stage')
+            ->setTranslationDomain('admin');
     }
 
     public function configureMenuItems(): iterable

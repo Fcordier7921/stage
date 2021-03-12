@@ -38,3 +38,6 @@ security:
            - { path: ^/admin, roles: ROLE_ADMIN }
            - { path: ^/entreprise, roles: ROLE_ENTREPRISE }
            - { path: ^/apprenant, roles: ROLE_APPRENANT }
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_ENTREPRISE, ROLE_APPRENANT

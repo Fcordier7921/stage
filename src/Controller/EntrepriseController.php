@@ -59,7 +59,7 @@ class EntrepriseController extends AbstractController
     public function AffCandidature(Request $request, User  $user, ContactRepository $contactRepository, CandidatureRepository $candidatureRepository, ApprenantRepository $apprenantRepository) : Response
     {
        
-        $projets=$user->getEntreprise();//info de la fiche entre rpise
+        $projets=$user->getEntreprise();//info de la fiche entreprise
         
         $contact=$contactRepository->findBy(['entreprise'=>$projets->getId()]);
 
@@ -71,6 +71,7 @@ class EntrepriseController extends AbstractController
         }
         
         $IdPositiftrie=array_unique($Idpositif);
+        
         //resortire les id de tout les apprenants
         $apprenant=$apprenantRepository->findALL();
         $IdApprenant=[];

@@ -98,6 +98,11 @@ class Entreprise
         $this->apprenants = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getId().'-'.$this->getNom().'-'.$this->getCodePostal().' '.$this->getVille();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -229,22 +234,22 @@ class Entreprise
         return $this->contact;
     }
 
-    public function addContact(Contact $contact): self
+    public function addContact(Contact $contact, EntrepriseRepository $entrepriseRepository, $id): self
     {
         if (!$this->contact->contains($contact)) {
             $this->contact[] = $contact;
-            $contact->setEntreprise($this);
+            $contact->setEntreprise($this->$entrepriseRepository, $id);
         }
 
         return $this;
     }
 
-    public function removeContact(Contact $contact): self
+    public function removeContact(Contact $contact, EntrepriseRepository $entrepriseRepository, $id): self
     {
         if ($this->contact->removeElement($contact)) {
             // set the owning side to null (unless already changed)
             if ($contact->getEntreprise() === $this) {
-                $contact->setEntreprise(null);
+                $contact->setEntreprise($this->$entrepriseRepository, $id);
             }
         }
 

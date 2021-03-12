@@ -44,6 +44,11 @@ class Contact
      */
     private $entreprise;
 
+    public function __toString()
+    {
+        return $this->getId().'-'.$this->getNom().' '.$this->getPrenom();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

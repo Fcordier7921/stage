@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
+
 /**
  * @ORM\Entity(repositoryClass=ApprenantRepository::class)
  */
@@ -81,8 +82,9 @@ class Apprenant
     private $cv;
 
     /**
-     * @ORM\Column(type="date")
-     * @var string A "Y" formatted value
+     * 
+     * @ORM\Column(type="datetime")
+     * 
      */
     private $promo_anne;
 
@@ -147,6 +149,11 @@ class Apprenant
         $this->annoce_entreprise = new ArrayCollection();
         $this->entreprises = new ArrayCollection();
         $this->entreprise = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getId().'-'.$this->getNom().' '.$this->getPrenom();
     }
 
     public function getId(): ?int

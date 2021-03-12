@@ -4,6 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Candidature;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CandidatureCrudController extends AbstractCrudController
 {
@@ -12,14 +19,18 @@ class CandidatureCrudController extends AbstractCrudController
         return Candidature::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            IdField::new('id', 'ID')->onlyOnIndex(),
+            AssociationField::new('apprenant'),
+            DateTimeField::new('date_candidature'),
+            DateTimeField::new('date_relance'),
+            DateTimeField::new('date_entretient'),
+            TextField::new('statut'),
+            AssociationField::new('entreprise'),
         ];
     }
-    */
+    
 }

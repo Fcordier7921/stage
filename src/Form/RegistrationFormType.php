@@ -22,7 +22,6 @@ class RegistrationFormType extends AbstractType
                 'choices' => [
                     'Apprenant' => 'ROLE_APPRENANT',
                     'Entreprise' => 'ROLE_ENTREPRISE',
-                    'Administrateur' => 'ROLE_ADMIN'
                 ],
             
                 'multiple' => true,
@@ -33,14 +32,7 @@ class RegistrationFormType extends AbstractType
                 ] 
             ])
             ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => "Merci d'entré votre adresse email .",
-                    ]),
-                ],
-            ])
+            
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -57,7 +49,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => "Merci d'entré votre adresse email .",
+                    ]),
+                ],
+            ])
         ;
     }
 
