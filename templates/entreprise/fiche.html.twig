@@ -22,7 +22,7 @@
             </div>
             <div>
                 <h4>Les contacts de l'entreprise {{info.nom}} :</h4>
-                    <p>Pour ajouter un colaborateur cliqué <a href="{{path('contact_registere', {'idu':entreprise, 'ide':info.id})}}" class="mx-5">IcI</a></p>
+                    <p>Pour ajouter un colaborateur cliqué<a href="{{path('contact_registere', {'idu':entreprise, 'ide':info.id})}}" class="mx-5">IcI</a></p>
                 
                 {% if contacts !=null %}
                     {% for contact in contacts %}
@@ -45,7 +45,7 @@
         
         <div class="col-12 col-md-8">
             <div class="my-3">
-            <p>A la recherche d'un stagiaire cliqué <a  type="button" href="{{path('entreprise_annoce', {'idu':entreprise, 'ide':info.id})}}" value="ajouter une offre de stage">IcI</a></p>
+            <p>A la recherche d'un stagiaire, déposer votre annonce en cliquant <a  type="button" href="{{path('entreprise_annoce', {'idu':entreprise, 'ide':info.id})}}" value="ajouter une offre de stage">IcI</a></p>
              
             </div>
             {% if appres != null %}  

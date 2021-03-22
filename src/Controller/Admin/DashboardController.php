@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AnnonceEntreprise;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use App\Entity\Apprenant;
 use App\Entity\Candidature;
 use App\Entity\Entreprise;
@@ -69,18 +70,22 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        $positif=$this->CandidatureRepository->countAppPositif();
+
+        //recupérer tout les apprenand
         $apprenant=$this->ApprenantRepository->findAll();
+        //trier le apprenant avec une candidature positive + qui sont d'une promotion encours
+        $positif=$this->CandidatureRepository->countAppPositif();//recupére le candidature
         $apprenantActuelle=[];
         $apprenantActuelleId=[];
-        $now=new \DateTime();
+        $now=new \DateTime();//récuperation de la date du jour
         $nowYearn=$now->format('Y-m');
-        //identifier les apprenant de la promo actuel
+        //
         for($i=0; $i <count($apprenant); $i++)
         {
-            $date=$apprenant[$i]->getPromoAnne();
-            $dateDebut=$date->format('Y-m');
-            $dateMonth=($date->format('m'))+8;
+            $date=$apprenant[$i]->getPromoAnne();//recuperation de la date de promo
+            $dateDebut=$date->format('Y-m');//format de la date
+            $dateMonth=($date->format('m'))+8;//temps de formation
+            //condition si la formation se déroule sur 2 anné différente
             if($dateMonth>12){
                 $dateYear=($date->format('Y'))+1;
                 $dateMonthCalcul=$dateMonth-12;
@@ -88,14 +93,15 @@ class DashboardController extends AbstractDashboardController
             }else{
                 $dateFin=$date->format("Y-$dateMonth");
             }
-            
+            //comparaison si la date du jour et entre la date de début de formation et la date de fin de formation 
             if(($dateDebut<=$nowYearn && $nowYearn<=$dateFin))
             {
                 array_push($apprenantActuelle, $apprenant[$i]);
                 array_push($apprenantActuelleId, $apprenant[$i]->getId());
             }
         }
-        //enlever les apeant des autre promo
+        
+        //dans le tableau apprenant actuelle je suprime les apprenant non positif
         for($i=0; $i <count($positif); $i++)
         {
             $idPositifAppreant=$positif[$i]->getApprenant()->getId();
@@ -106,7 +112,7 @@ class DashboardController extends AbstractDashboardController
             }
         }
         
-    
+        
         
         
         
@@ -115,7 +121,7 @@ class DashboardController extends AbstractDashboardController
             'apprenentCandidaturePositif'=> count($positif),
             'apprenentEnRecheche'=> (count($apprenantActuelle))-(count($positif)),
 
-            'apprenantCandidature'=>'$attent'
+            'apprenantCandidaturePositif2'=>$positif,
         ]);
         
     }
@@ -137,4 +143,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('liste des apprenants', 'fa fa-file-zip-o', Apprenant::class);
         yield MenuItem::linkToCrud('Annonce des entreprises', 'fa fa-folder-o', AnnonceEntreprise::class);
     }
+
+    
 }
