@@ -28,13 +28,17 @@ class AnnonceEntrepriseCrudController extends AbstractCrudController
         return [
             IdField::new('id')->onlyOnIndex(),
             TextField::new('titre'),
-            TextEditorField::new('contenue'),
+            TextField::new('contenue'),
             TextField::new('specification'),
             BooleanField::new('etat_validation'),
             AssociationField::new('entreprise'),
         ];
     }
 
+    /**
+     * suprimer l'ajout d'une candidature
+     *
+     */
     public function configureActions(Actions $actions): Actions
         {
             return $actions

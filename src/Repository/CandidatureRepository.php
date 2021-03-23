@@ -76,5 +76,6 @@ class CandidatureRepository extends ServiceEntityRepository
         
         return $queryResult;
     }
+
     
 }

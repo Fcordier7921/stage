@@ -29,8 +29,8 @@ class CandidatureCrudController extends AbstractCrudController
             IdField::new('id', 'ID')->onlyOnIndex(),
             AssociationField::new('apprenant'),
             DateTimeField::new('date_candidature'),
-            DateTimeField::new('date_relance'),
-            DateTimeField::new('date_entretient'),
+            DateTimeField::new('date_relance')->setRequired(false),
+            DateTimeField::new('date_entretient')->setRequired(false),
             TextField::new('statut'),
             AssociationField::new('entreprise'),
         ];

@@ -75,6 +75,8 @@ class DashboardController extends AbstractDashboardController
         $apprenant=$this->ApprenantRepository->findAll();
         //trier le apprenant avec une candidature positive + qui sont d'une promotion encours
         $positif=$this->CandidatureRepository->countAppPositif();//recupére le candidature
+        
+        $this->EntrepriseRepository->findAll();
         $apprenantActuelle=[];
         $apprenantActuelleId=[];
         $now=new \DateTime();//récuperation de la date du jour
@@ -101,6 +103,13 @@ class DashboardController extends AbstractDashboardController
             }
         }
         
+
+        $AllapprenantPositif=[];
+        for($i=0; $i <count($positif); $i++)
+        {
+            array_push($AllapprenantPositif, $positif[$i]);  
+        }
+        
         //dans le tableau apprenant actuelle je suprime les apprenant non positif
         for($i=0; $i <count($positif); $i++)
         {
@@ -111,17 +120,34 @@ class DashboardController extends AbstractDashboardController
                 Unset($positif[$i]);
             }
         }
-        
-        
-        
-        
-        
+
+        //recupérer les apprenant qui on une date d'entretien
+        $candidature=$this->CandidatureRepository->findAll();
+        $entretien=[];
+        for($i=0; $i<count($candidature); $i++)//recupuérer les stagiaire qui on une date d'entretien 
+        {
+            
+            if($candidature[$i]->getDateEntretient() != null && $candidature[$i]->getStatut() != 'Négatif' && $candidature[$i]->getStatut() != 'Positif' )
+            {
+                if(in_array($candidature[$i], $entretien ))
+                {
+                    //ne rien faire
+                }else
+                {
+                      array_push($entretien, $candidature[$i]); 
+                }
+            
+            }
+        }
+        //il faut suprimer les apprenant qui ont trouver un stage
+   
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'countAllApprenant' => count($apprenantActuelle),
-            'apprenentCandidaturePositif'=> count($positif),
+            'apprenentcountPositif'=> count($positif),
             'apprenentEnRecheche'=> (count($apprenantActuelle))-(count($positif)),
-
-            'apprenantCandidaturePositif2'=>$positif,
+            'entretiens'=>$entretien,
+            'apprenantCandidaturePositifs'=>$AllapprenantPositif,
+            'apprenants'=>$apprenant,
         ]);
         
     }
@@ -139,7 +165,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('les utilisateurs', 'fa fa-users', User::class);
         yield MenuItem::linkToCrud('Les entreprises', 'fa fa-cogs', Entreprise::class);
-        yield MenuItem::linkToCrud('Les annoce poster par le apprenent', 'fa fa-envelope-o', Candidature::class);
+        yield MenuItem::linkToCrud('Candidature Aprenant', 'fa fa-envelope-o', Candidature::class);
         yield MenuItem::linkToCrud('liste des apprenants', 'fa fa-file-zip-o', Apprenant::class);
         yield MenuItem::linkToCrud('Annonce des entreprises', 'fa fa-folder-o', AnnonceEntreprise::class);
     }
