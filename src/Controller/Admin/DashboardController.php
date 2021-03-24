@@ -138,16 +138,42 @@ class DashboardController extends AbstractDashboardController
                 }
             
             }
+
         }
+        
         //il faut suprimer les apprenant qui ont trouver un stage
-   
+        $idpositif=[];
+        $idEntretien=[];
+        for($i=0; $i<count($AllapprenantPositif);$i++)//recuperer la liste des apprenant qui on un stage
+        {
+            array_push($idpositif, $AllapprenantPositif[$i]->getApprenant()); 
+        }
+        for($i=0; $i<count($entretien);$i++)//recuperer la liste des apprenant qui on un entretien
+        {
+            array_push($idEntretien, $entretien[$i]->getApprenant()); 
+        }
+        $apprenantEntrtienfilter=array_diff($idEntretien, $idpositif);//comparaison
+        $definitifentreprient=[];//enlever les appreant qui on un stage
+        for($i=0; $i<count($entretien); $i++)
+        {
+           if(in_array(($entretien[$i]->getApprenant()), $apprenantEntrtienfilter) )
+           {
+              array_push($definitifentreprient, $entretien[$i]); 
+           }
+        }
+        
+        //apprenant sana rien
+        dd($apprenant[0]->getCandidature());
+        
+
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'countAllApprenant' => count($apprenantActuelle),
             'apprenentcountPositif'=> count($positif),
             'apprenentEnRecheche'=> (count($apprenantActuelle))-(count($positif)),
-            'entretiens'=>$entretien,
+            'entretiens'=>$definitifentreprient,
             'apprenantCandidaturePositifs'=>$AllapprenantPositif,
             'apprenants'=>$apprenant,
+
         ]);
         
     }
