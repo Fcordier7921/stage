@@ -162,8 +162,22 @@ class DashboardController extends AbstractDashboardController
            }
         }
         
-        //apprenant sana rien
-        dd($apprenant[0]->getCandidature());
+        //apprenant sans stage
+        //recuperer tout les aapprenants positif
+        $pisitifbis=[];
+        for($i=0; $i<count($AllapprenantPositif); $i++)
+        {
+            array_push($pisitifbis, $AllapprenantPositif[$i]->getApprenant());
+        }
+        //recupérer tout la apprenant qui on un entretien
+        $entretienbis=[];
+        for($i=0; $i<count($definitifentreprient); $i++)
+        {
+            array_push($entretienbis, $definitifentreprient[$i]->getApprenant());
+        }
+        // recupérer tout les apprenant 
+        
+        
         
 
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
