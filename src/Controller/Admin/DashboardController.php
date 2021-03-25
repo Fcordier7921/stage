@@ -162,8 +162,11 @@ class DashboardController extends AbstractDashboardController
            }
         }
         
+
+
+
         //apprenant sans stage
-        //recuperer tout les aapprenants positif
+        //recuperer tout les apprenants positif
         $pisitifbis=[];
         for($i=0; $i<count($AllapprenantPositif); $i++)
         {
@@ -175,7 +178,22 @@ class DashboardController extends AbstractDashboardController
         {
             array_push($entretienbis, $definitifentreprient[$i]->getApprenant());
         }
-        // recupérer tout les apprenant 
+        // recupérer tout les apprenant sans stage
+        $app=$this->ApprenantRepository->findAll();
+        $resultPositif = array_diff($app, $pisitifbis);
+        $resultEntretient = array_diff($resultPositif, $entretienbis);
+        //recuperer la derniére candidature des apprenant sans stage
+        $cand=$this->CandidatureRepository->findAll();
+        $resultCandidature=[];
+        for($i=0; $i<count($cand); $i++)
+        {
+            if(in_array(($cand[$i]->getApprenant()), $resultEntretient))
+            {
+                array_push($resultCandidature, $cand[$i]);
+            }
+        }
+        
+        //je bloc sur 
         
         
         

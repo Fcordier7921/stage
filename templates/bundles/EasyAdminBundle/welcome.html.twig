@@ -34,7 +34,7 @@
         <thead>
             <tr>
                 <th>Apprenant ayant trouvé un stage</th>
-                <th>Apprenant en attente de réponse aprés un entretient</th>
+                <th>Apprenant qui on un entretien avec un entreprise</th>
                 <th>Apprenant n'ayant pas trouvé de stage</th>
                 
             </tr>
@@ -49,7 +49,7 @@
                 </td>
                 <td>{% for entretien in entretiens %}
                         
-                        {{entretien.apprenant.nom}} {{entretien.apprenant.prenom}}--{{entretien.entreprise.nom}} {{entretien.entreprise.ville}}<br><br>
+                        <p>{{entretien.apprenant.nom}} {{entretien.apprenant.prenom}}--{{entretien.entreprise.nom}} {{entretien.entreprise.ville}}<br><span class="ml-5">&rArr;  rendez-vous le : {{entretien.dateEntretient |date("d-m-Y")}}</span></p><br><br>
                     {% endfor %}</td>
                 <td>System Architect</td>
             </tr>

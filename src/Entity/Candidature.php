@@ -54,7 +54,7 @@ class Candidature
     private $entreprise;
 
     
-
+    
     public function getId(): ?int
     {
         return $this->id;
