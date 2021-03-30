@@ -123,6 +123,7 @@ class DashboardController extends AbstractDashboardController
 
         //recupérer les apprenant qui on une date d'entretien
         $candidature=$this->CandidatureRepository->findAll();
+        
         $entretien=[];
         for($i=0; $i<count($candidature); $i++)//recupuérer les stagiaire qui on une date d'entretien 
         {
@@ -168,6 +169,7 @@ class DashboardController extends AbstractDashboardController
         //apprenant sans stage
         //recuperer tout les apprenants positif
         $pisitifbis=[];
+       
         for($i=0; $i<count($AllapprenantPositif); $i++)
         {
             array_push($pisitifbis, $AllapprenantPositif[$i]->getApprenant());
@@ -192,10 +194,18 @@ class DashboardController extends AbstractDashboardController
                 array_push($resultCandidature, $cand[$i]);
             }
         }
+        $ids=[];
+        foreach($idpositif as $idp){
+            $ids[]=$idp->getId();
+        }
         
+
+
+    
         //je bloc sur 
+    $appNegatif=$this->ApprenantRepository->findApprenantsNegatif(join(',',$ids));
         
-        
+    dd($appNegatif);    
         
 
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
@@ -205,7 +215,7 @@ class DashboardController extends AbstractDashboardController
             'entretiens'=>$definitifentreprient,
             'apprenantCandidaturePositifs'=>$AllapprenantPositif,
             'apprenants'=>$apprenant,
-
+            'apprenantCandidatureNegatifs'=>$appNegatif
         ]);
         
     }

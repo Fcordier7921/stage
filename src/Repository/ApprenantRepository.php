@@ -6,6 +6,7 @@ use App\Entity\Apprenant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @method Apprenant|null find($id, $lockMode = null, $lockVersion = null)
  * @method Apprenant|null findOneBy(array $criteria, array $orderBy = null)
@@ -26,7 +27,7 @@ class ApprenantRepository extends ServiceEntityRepository
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.Users = :val')
+            ->andWhere('a.users = :val')
             ->setParameter('val', $value)
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
@@ -60,8 +61,27 @@ class ApprenantRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
+    public function findApprenantsNegatif($ids)
+    {   
 
-   
+        $em = $this->getEntityManager();
+        return $em->createQueryBuilder()
+        ->select(['a', 'MAX(c.date_candidature)', 'GROUP_CONCAT(c.statut SEPARATOR '|') as statuts'])
+        ->from('App\Entity\Apprenant', 'a')
+        ->join('App\Entity\Candidature', 'c', 'WITH', 'a.id=c.apprenant')
+        ->setParameter('statut', 'En attente')
+        ->setParameter('id', $ids)
+        ->andWhere('c.statut = :statut')
+        ->andWhere('a.id not in(:id)')
+        // ->andWhere("a.id not in(SELECT a2.id FROM App\Entity\Apprenant as a2 LEFT JOIN App\Entity\Candidature as c2 ON (a2.id=c2.apprenant) WHERE c2.statut <> 'Positif')")
+        ->groupBy('a.id')
+        ->orderBy('a.id', 'ASC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+    ;
+    }
+    
 
 
 

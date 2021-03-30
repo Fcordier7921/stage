@@ -51,7 +51,9 @@
                         
                         <p>{{entretien.apprenant.nom}} {{entretien.apprenant.prenom}}--{{entretien.entreprise.nom}} {{entretien.entreprise.ville}}<br><span class="ml-5">&rArr;  rendez-vous le : {{entretien.dateEntretient |date("d-m-Y")}}</span></p><br><br>
                     {% endfor %}</td>
-                <td>System Architect</td>
+                <td>{% for apprenantCandidatureNegatif in          apprenantCandidatureNegatifs %}
+                        {{apprenantCandidatureNegatif.apprenant.nom}} {{apprenantCandidatureNegatif.apprenant.prenom}}--{{apprenantCandidatureNegatif.entreprise.nom}} {{apprenantCandidatureNegatif.entreprise.ville}}<br><br>
+                    {% endfor %}</td>
             </tr>
             
           
