@@ -76,6 +76,7 @@ class DashboardController extends AbstractDashboardController
         //trier le apprenant avec une candidature positive + qui sont d'une promotion encours
         $positif=$this->CandidatureRepository->countAppPositif();//recupére le candidature
         
+        
         $this->EntrepriseRepository->findAll();
         $apprenantActuelle=[];
         $apprenantActuelleId=[];
@@ -121,101 +122,22 @@ class DashboardController extends AbstractDashboardController
             }
         }
 
-        //recupérer les apprenant qui on une date d'entretien
-        $candidature=$this->CandidatureRepository->findAll();
-        
-        $entretien=[];
-        for($i=0; $i<count($candidature); $i++)//recupuérer les stagiaire qui on une date d'entretien 
-        {
+        //les apprenant avec un entretien
+        $entreprient=$this->CandidatureRepository->findApprenantentretien('');
             
-            if($candidature[$i]->getDateEntretient() != null && $candidature[$i]->getStatut() != 'Négatif' && $candidature[$i]->getStatut() != 'Positif' )
-            {
-                if(in_array($candidature[$i], $entretien ))
-                {
-                    //ne rien faire
-                }else
-                {
-                      array_push($entretien, $candidature[$i]); 
-                }
-            
-            }
-
-        }
+    // $appNegatif=$this->ApprenantRepository->findApprenantsNegatif(join(',',$ids));
         
-        //il faut suprimer les apprenant qui ont trouver un stage
-        $idpositif=[];
-        $idEntretien=[];
-        for($i=0; $i<count($AllapprenantPositif);$i++)//recuperer la liste des apprenant qui on un stage
-        {
-            array_push($idpositif, $AllapprenantPositif[$i]->getApprenant()); 
-        }
-        for($i=0; $i<count($entretien);$i++)//recuperer la liste des apprenant qui on un entretien
-        {
-            array_push($idEntretien, $entretien[$i]->getApprenant()); 
-        }
-        $apprenantEntrtienfilter=array_diff($idEntretien, $idpositif);//comparaison
-        $definitifentreprient=[];//enlever les appreant qui on un stage
-        for($i=0; $i<count($entretien); $i++)
-        {
-           if(in_array(($entretien[$i]->getApprenant()), $apprenantEntrtienfilter) )
-           {
-              array_push($definitifentreprient, $entretien[$i]); 
-           }
-        }
-        
-
-
-
-        //apprenant sans stage
-        //recuperer tout les apprenants positif
-        $pisitifbis=[];
-       
-        for($i=0; $i<count($AllapprenantPositif); $i++)
-        {
-            array_push($pisitifbis, $AllapprenantPositif[$i]->getApprenant());
-        }
-        //recupérer tout la apprenant qui on un entretien
-        $entretienbis=[];
-        for($i=0; $i<count($definitifentreprient); $i++)
-        {
-            array_push($entretienbis, $definitifentreprient[$i]->getApprenant());
-        }
-        // recupérer tout les apprenant sans stage
-        $app=$this->ApprenantRepository->findAll();
-        $resultPositif = array_diff($app, $pisitifbis);
-        $resultEntretient = array_diff($resultPositif, $entretienbis);
-        //recuperer la derniére candidature des apprenant sans stage
-        $cand=$this->CandidatureRepository->findAll();
-        $resultCandidature=[];
-        for($i=0; $i<count($cand); $i++)
-        {
-            if(in_array(($cand[$i]->getApprenant()), $resultEntretient))
-            {
-                array_push($resultCandidature, $cand[$i]);
-            }
-        }
-        $ids=[];
-        foreach($idpositif as $idp){
-            $ids[]=$idp->getId();
-        }
-        
-
-
-    
-        //je bloc sur 
-    $appNegatif=$this->ApprenantRepository->findApprenantsNegatif(join(',',$ids));
-        
-    dd($appNegatif);    
+    // dd($appNegatif);    
         
 
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'countAllApprenant' => count($apprenantActuelle),
             'apprenentcountPositif'=> count($positif),
             'apprenentEnRecheche'=> (count($apprenantActuelle))-(count($positif)),
-            'entretiens'=>$definitifentreprient,
+            'entretiens'=>$entreprient,
             'apprenantCandidaturePositifs'=>$AllapprenantPositif,
             'apprenants'=>$apprenant,
-            'apprenantCandidatureNegatifs'=>$appNegatif
+            'apprenantCandidatureNegatifs'=>'$appNegatif'
         ]);
         
     }

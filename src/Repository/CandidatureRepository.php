@@ -77,5 +77,39 @@ class CandidatureRepository extends ServiceEntityRepository
         return $queryResult;
     }
 
-    
+     
+    public function findApprenantentretien($value)//selectionner tout les candidature avec un entretien
+    {
+        $builder=$this->createQueryBuilder('c');
+        $query=$builder->andWhere('c.date_entretient != :val')
+            ->andWhere('c.statut != :val2')
+            ->andWhere('c.statut != :val3')
+            ->setParameter('val', $value)
+            ->setParameter('val2', 'Positif')
+            ->setParameter('val3', 'Négatif')
+            ->getQuery()
+            ->getResult()
+            ;
+        $builderPositif=$this->createQueryBuilder('e');
+        $queryPositif=$builderPositif->andWhere('e.statut = :val')
+                        ->setParameter('val', 'Positif')
+                        ->getQuery()
+                        ->getResult()
+                        ;
+        $queryApp=[];
+        $queryPositifApp=[];
+        for($i=0; $i<count($query); $i++){
+            array_push($queryApp, $query[$i]->getApprenant()); 
+        }
+        for($i=0; $i<count($queryPositif); $i++){
+            array_push($queryPositifApp, $queryPositif[$i]->getApprenant()); 
+        }
+        for($i=0; $i<count($query); $i++){
+            if(in_array($queryApp[$i], $queryPositifApp)){
+                Unset($query[$i]);
+            }
+        }
+       return $query;
+    }
+  
 }
