@@ -123,9 +123,9 @@ class DashboardController extends AbstractDashboardController
         }
 
         //les apprenant avec un entretien
-        $entreprient=$this->CandidatureRepository->findApprenantentretien('');
+        $entreprient=$this->CandidatureRepository->findApprenantentretien();
             
-    // $appNegatif=$this->ApprenantRepository->findApprenantsNegatif(join(',',$ids));
+    $appNegatif=$this->CandidatureRepository->findApprenantsNegatif();
         
     // dd($appNegatif);    
         

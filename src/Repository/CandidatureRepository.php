@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Candidature;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -78,21 +79,16 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
      
-    public function findApprenantentretien($value)//selectionner tout les candidature avec un entretien
+    public function findApprenantentretien()//selectionner tout les candidature avec un entretien
     {
         $builder=$this->createQueryBuilder('c');
-        $query=$builder->andWhere('c.date_entretient != :val')
-            ->andWhere('c.statut != :val2')
-            ->andWhere('c.statut != :val3')
-            ->setParameter('val', $value)
-            ->setParameter('val2', 'Positif')
-            ->setParameter('val3', 'Négatif')
+        $query=$builder->andWhere('c.date_entretient IS NOT NULL')
+            ->andWhere("c.statut NOT IN('Positif', 'Négatif')")
             ->getQuery()
             ->getResult()
             ;
         $builderPositif=$this->createQueryBuilder('e');
-        $queryPositif=$builderPositif->andWhere('e.statut = :val')
-                        ->setParameter('val', 'Positif')
+        $queryPositif=$builderPositif->andWhere("e.statut = 'Positif'")
                         ->getQuery()
                         ->getResult()
                         ;
@@ -112,4 +108,32 @@ class CandidatureRepository extends ServiceEntityRepository
        return $query;
     }
   
+
+    
+    public function findApprenantsNegatif()//selectionner tout les candidature sans stage
+    {
+        $builderPositif=$this->createQueryBuilder('e');
+        $queryPositif=$builderPositif->andWhere("e.statut = 'Positif'")
+                        ->orWhere("e.statut IN ('En attente', 'Relancée')")
+                        ->andWhere("e.date_entretient IS NOT NULL")
+                        ->groupBy("e.apprenant")
+                        ->getQuery()
+                        ->getResult()
+                        ;
+        $idAppPositif=array_map(function($el){return $el->getApprenant()->getId();},array_values($queryPositif));
+        dd([$idAppPositif, $queryPositif]);
+        $builder=$this->createQueryBuilder('f');
+        $query=$builder->andWhere('f.date_entretient IS NULL')
+            ->andWhere("f.statut IN ('En attente', 'Relancée')")
+            ->andWhere("f.apprenant NOT IN (:ids) ")
+            ->setParameter('ids', $idAppPositif )
+            ->groupBy("f.apprenant")
+            ->orderBy('f.date_candidature', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+            dd($query);
+        
+       return $query;
+    }
 }
